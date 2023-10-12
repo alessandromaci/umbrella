@@ -2,7 +2,18 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+First, install the dependencies:
+
+```bash
+npm install @nextui-org/react framer-motion tailwindcss @rainbow-me/rainbowkit wagmi viem next@latest
+```
+or
+
+```bash
+yarn add @nextui-org/react framer-motion tailwindcss @rainbow-me/rainbowkit wagmi viem next@latest
+```
+
+Run the development server:
 
 ```bash
 npm run dev
