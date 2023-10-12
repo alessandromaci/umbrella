@@ -53,9 +53,9 @@ const UserProfileForm: React.FC<{
     } else {
       const { meta: insert } = await db
         .prepare(
-          `INSERT INTO ${name} (a_address, b_userName, c_country) VALUES (?, ?, ?);`
+          `UPDATE ${name} SET b_userName = ?, c_country = ? WHERE a_address = ?`
         )
-        .bind(address, userName, country)
+        .bind(userName, country, address)
         .run();
 
       // Wait for transaction finality
