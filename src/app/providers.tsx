@@ -16,6 +16,7 @@ import {
   scrollTestnet,
   base,
   goerli,
+  polygonMumbai,
 } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 
@@ -28,7 +29,9 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
     base,
     scrollSepolia,
     scrollTestnet,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" ? [goerli] : []),
+    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true"
+      ? [goerli, polygonMumbai]
+      : []),
   ],
   [publicProvider()]
 );
