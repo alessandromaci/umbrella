@@ -40,7 +40,7 @@ const projectId = process.env.NEXT_PUBLIC_WALLET_CONNECT_ID!;
 
 const { wallets } = getDefaultWallets({
   appName: "Umbrella",
-  projectId,
+  projectId: '4b498b3f9a843edfed85307c445b731f',
   chains,
 });
 
