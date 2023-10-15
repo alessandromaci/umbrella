@@ -1,6 +1,7 @@
 import React from "react";
 import { Database } from "@tableland/sdk";
 import { useAccount } from "wagmi";
+// import { getRequestBody } from "../utils/polygonId";
 
 interface UserProfile {
   userName: string;
@@ -74,6 +75,11 @@ const UserProfileForm: React.FC<{
     }
   };
 
+  // const handleRequest = async () => {
+  //   const request = await getRequestBody();
+  //   console.log(request);
+  // };
+
   return (
     <div>
       <div>
@@ -92,6 +98,7 @@ const UserProfileForm: React.FC<{
         </label>
       </div>
       <button onClick={handleSave}>Save</button>
+      {/* <button onClick={handleRequest}>Request Verification</button> */}
     </div>
   );
 };
