@@ -55,71 +55,69 @@ const Page: React.FC = () => {
         <ConnectButton />
       </div>
 
-      {showForm && (
-        <>
-          <UserProfileForm onSave={handleProfileSave} />
+      {showForm && <UserProfileForm onSave={handleProfileSave} />}
+      <>
+        <div>
+          <h2>New Transaction</h2>
           <div>
-            <h2>New Transaction</h2>
-            <div>
-              <label>
-                Enter amount and asset:
-                <input
-                  type="number"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                />
-              </label>
-              <select defaultValue="ETH">
-                <option>ETH</option>
-                {/* Add other assets as options here */}
-              </select>
-            </div>
-            <div>
-              <label>
-                Enter recipient:
-                <input
-                  type="text"
-                  value={recipient}
-                  onChange={(e) => setRecipient(e.target.value)}
-                  placeholder="0x..."
-                />
-              </label>
-            </div>
-            <div>
-              <label>
-                Select security level:
-                <select
-                  value={securityLevel}
-                  onChange={(e) => setSecurityLevel(e.target.value)}
-                >
-                  <option>Basic Security</option>
-                  <option>Enhanced Security</option>
-                  <option>Advanced Security</option>
-                </select>
-              </label>
-            </div>
-            <button
-              disabled={
-                isLoadingNative || !sendTransaction || !recipient || !amount
-              }
-              type="button"
-              onClick={() => sendTransaction?.()}
-            >
-              {isLoadingNative ? "Sending..." : "Send"}
-            </button>
-            {isSuccessNative && (
-              <div>
-                Successfully sent {amount} ether to {recipient}
-                <div>
-                  <a href={`https://etherscan.io/tx/${dataNative?.hash}`}>
-                    Etherscan
-                  </a>
-                </div>
-              </div>
-            )}
+            <label>
+              Enter amount and asset:
+              <input
+                type="number"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+              />
+            </label>
+            <select defaultValue="ETH">
+              <option>ETH</option>
+              {/* Add other assets as options here */}
+            </select>
           </div>
-        </>
-      )}
+          <div>
+            <label>
+              Enter recipient:
+              <input
+                type="text"
+                value={recipient}
+                onChange={(e) => setRecipient(e.target.value)}
+                placeholder="0x..."
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Select security level:
+              <select
+                value={securityLevel}
+                onChange={(e) => setSecurityLevel(e.target.value)}
+              >
+                <option>Basic Security</option>
+                <option>Enhanced Security</option>
+                <option>Advanced Security</option>
+              </select>
+            </label>
+          </div>
+          <button
+            disabled={
+              isLoadingNative || !sendTransaction || !recipient || !amount
+            }
+            type="button"
+            onClick={() => sendTransaction?.()}
+          >
+            {isLoadingNative ? "Sending..." : "Send"}
+          </button>
+          {isSuccessNative && (
+            <div>
+              Successfully sent {amount} ether to {recipient}
+              <div>
+                <a href={`https://etherscan.io/tx/${dataNative?.hash}`}>
+                  Etherscan
+                </a>
+              </div>
+            </div>
+          )}
+        </div>
+      </>
     </>
   );
 };
