@@ -42,6 +42,19 @@ const Page: React.FC = () => {
       hash: dataNative?.hash,
     });
 
+  //wagmi native transaction
+  const { config: configTest } = usePrepareSendTransaction({
+    to: recipient,
+    value: BigInt(utils.parseEther("0.00169").toString()),
+  });
+  const { data: dataTest, sendTransaction: sendTransactionTest } =
+    useSendTransaction(configTest);
+
+  const { isLoading: isLoadingTest, isSuccess: isSuccessTest } =
+    useWaitForTransaction({
+      hash: dataTest?.hash,
+    });
+
   return (
     <>
       <div
@@ -116,6 +129,15 @@ const Page: React.FC = () => {
               </div>
             </div>
           )}
+          <div>
+            <button
+              disabled={isLoadingTest || !sendTransactionTest || !recipient}
+              type="button"
+              onClick={() => sendTransactionTest?.()}
+            >
+              {isLoadingNative ? "Sending..." : "Send test transaction"}
+            </button>
+          </div>
         </div>
       </>
     </>
