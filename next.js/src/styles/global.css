@@ -10,3 +10,11 @@ body {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+a::after{
+  content: '↗';
+}
+
+.addressName::after{
+  content: ' 'url(./Verified.svg);
+}
