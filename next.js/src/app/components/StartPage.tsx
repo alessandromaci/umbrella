@@ -17,7 +17,9 @@ import {
 } from "../utils/constants";
 import ERC20 from "../utils/ERC20.abi.json";
 
-const TransactionDetail: React.FC = () => {
+const TransactionDetail: React.FC<{ onContinue: () => void }> = ({
+  onContinue,
+}) => {
   const [selectedToken, setSelectedToken] = React.useState<{
     label: string;
     decimals: number;
@@ -285,7 +287,11 @@ const TransactionDetail: React.FC = () => {
           </RadioGroup.Root>
           <br />
           <br />
-          <button className="h-[35px] w-[520px] font-bold hover:bg-sky-500 bg-sky-600 rounded-md text-lg">
+          <button
+            type="button"
+            onClick={onContinue}
+            className="h-[35px] w-[520px] font-bold hover:bg-sky-500 bg-sky-600 rounded-md text-lg"
+          >
             {"Continue"}
           </button>
           <br />
@@ -319,7 +325,6 @@ const TransactionDetail: React.FC = () => {
             onClick={() => sendTransactionTest?.()}
           >
             {isLoadingNative ? "Sending..." : "Send test transaction"}
-            {/* Continue */}
           </button>
         </div>
       </div>

@@ -3,7 +3,8 @@
 import React, { useState } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 //import UserProfileForm from "./components/UserProfile";
-import TransactionDetail from "./components/TransactionDetail";
+import StartPage from "./components/StartPage";
+import TestTransaction from "./components/TestTransaction";
 
 // to use for tableland
 // interface UserProfile {
@@ -12,6 +13,7 @@ import TransactionDetail from "./components/TransactionDetail";
 // }
 
 const Page: React.FC = () => {
+  let [pageNumber, setPageNumber] = React.useState<number>(0);
   return (
     <>
       <div
@@ -23,7 +25,15 @@ const Page: React.FC = () => {
       >
         <ConnectButton />
       </div>
-      <TransactionDetail />
+      {pageNumber === 0 ? (
+        <StartPage
+          onContinue={() => {
+            setPageNumber(1);
+          }}
+        />
+      ) : (
+        <TestTransaction />
+      )}
     </>
   );
 };
