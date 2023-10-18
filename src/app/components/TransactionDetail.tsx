@@ -43,13 +43,13 @@ const TransactionDetail: React.FC = () => {
     <main className="flex min-h-screen flex-col items-center  justify-between p-24">
       <div className="max-w-5xl w-fit p-4 rounded-xl items-center justify-between border-2 font-sans text-sm lg:flex">
         <div>
-          <h1 className="text-2xl font-bold mb-2">New Transaction</h1>
+          <h1 className="text-2xl font-bold mb-2">{"New Transaction"}</h1>
           <br />
           <Label.Root
             className="text-lg font-semibold mt-6 leading-[35px] text-black"
             htmlFor="amount"
           >
-            Enter amount & asset
+            {" Enter amount & asset"}
           </Label.Root>
           <br />
           <input
@@ -67,19 +67,19 @@ const TransactionDetail: React.FC = () => {
             className="h-[35px] bg-blackA2 shadow-blackA6 rounded-r px-[10px]  outline-none focus:shadow-[0_0_0_2px_black] selection:color-white selection:bg-black leading-none text-black shadow-[0_0_0_1px] border-l-0"
           >
             <option value="ETH" data-placeholder="0.00">
-              ETH
+              {"ETH"}
             </option>
             <option value="USDT" data-placeholder="0.00">
-              USDC
+              {"USDC"}
             </option>
             <option value="USDC" data-placeholder="0.00">
-              USDT
+              {"USDT"}
             </option>
             <option value="DAI" data-placeholder="0.00">
-              DAI
+              {"DAI"}
             </option>
             <option value="MATIC" data-placeholder="0.00">
-              MATIC
+              {"MATIC"}
             </option>
           </select>
           <br />
@@ -88,7 +88,7 @@ const TransactionDetail: React.FC = () => {
             className="text-lg font-semibold mt-6 leading-[35px] text-black"
             htmlFor="address"
           >
-            New Address | Address book
+            {"New Address | Address book"}
           </Label.Root>
           <br />
           <input
@@ -101,7 +101,9 @@ const TransactionDetail: React.FC = () => {
           />
           <br />
           <br />
-          <h2 className="text-lg font-semibold my-2">Select security level</h2>
+          <h2 className="text-lg font-semibold my-2">
+            {"Select security level"}
+          </h2>
           <br />
           <RadioGroup.Root
             className="flex flex-col gap-2.5"
@@ -121,11 +123,12 @@ const TransactionDetail: React.FC = () => {
                 className="text-black text-[15px] leading-none pl-[15px]"
                 htmlFor="r1"
               >
-                Basic Security
+                {"Basic Security"}
                 <br />
                 <p className="text-sm font-light">
-                  Send a test transaction and connect with an account you've
-                  never sent funds to before.
+                  {
+                    "Send a test transaction and connect with an account you've never sent funds to before."
+                  }
                 </p>
               </label>
             </div>
@@ -142,11 +145,12 @@ const TransactionDetail: React.FC = () => {
                 className="text-black text-[15px] leading-none pl-[15px]"
                 htmlFor="r2"
               >
-                Enhanced Security
+                {"Enhanced Security"}
                 <br />
                 <p className="text-sm font-light">
-                  Run an intelligence analysis on a address to see if they are a
-                  legitimate account.
+                  {
+                    "Run an intelligence analysis on a address to see if they are a legitimate account."
+                  }
                 </p>
               </label>
             </div>
@@ -163,11 +167,12 @@ const TransactionDetail: React.FC = () => {
                 className="text-black text-[15px] leading-none pl-[15px]"
                 htmlFor="r3"
               >
-                Advanced Security
+                {"Advanced Security"}
                 <br />
                 <p className="text-sm font-light">
-                  Create an escrow contract which holds funds until a certain
-                  condition is met.
+                  {
+                    "Create an escrow contract which holds funds until a certain condition is met."
+                  }
                 </p>
               </label>
             </div>
@@ -175,7 +180,7 @@ const TransactionDetail: React.FC = () => {
           <br />
           <br />
           <button className="h-[35px] w-[520px] font-bold hover:bg-sky-500 bg-sky-600 rounded-md text-lg">
-            Continue
+            {"Continue"}
           </button>
           <br />
           <br />
@@ -191,10 +196,10 @@ const TransactionDetail: React.FC = () => {
           </button>
           {isSuccessNative && (
             <div>
-              Successfully sent {amount} ether to {recipient}
+              {`Successfully sent {amount} ether to {recipient}`}
               <div>
                 <a href={`https://etherscan.io/tx/${dataNative?.hash}`}>
-                  Etherscan
+                  {"Etherscan"}
                 </a>
               </div>
             </div>
