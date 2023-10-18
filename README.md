@@ -5,12 +5,12 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 First, install the dependencies:
 
 ```bash
-npm install @nextui-org/react framer-motion tailwindcss @rainbow-me/rainbowkit wagmi viem next@latest
+npm install @radix-ui/react-label @radix-ui/react-radio-group @radix-ui/colors tailwindcss @rainbow-me/rainbowkit wagmi viem next@latest
 ```
 or
 
 ```bash
-yarn add @nextui-org/react framer-motion tailwindcss @rainbow-me/rainbowkit wagmi viem next@latest
+yarn add @radix-ui/react-label @radix-ui/react-radio-group @radix-ui/colors @rainbow-me/rainbowkit wagmi viem next@latest
 ```
 
 Run the development server:
