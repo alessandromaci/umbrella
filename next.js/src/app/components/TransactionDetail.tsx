@@ -5,18 +5,47 @@ import {
   useWaitForTransaction,
   usePrepareSendTransaction,
   useSendTransaction,
+  useNetwork,
+  usePrepareContractWrite,
+  useContractWrite,
 } from "wagmi";
 import { utils } from "ethers";
+import {
+  selectToken,
+  selectTokenDecimals,
+  tokensDetails,
+} from "../utils/constants";
+import ERC20 from "../utils/ERC20.abi.json";
 
 const TransactionDetail: React.FC = () => {
+  const [selectedToken, setSelectedToken] = React.useState<{
+    label: string;
+    decimals: number;
+    homestead: string;
+    goerli: string;
+    optimism: string;
+    arbitrum: string;
+    matic: string;
+  }>(tokensDetails[0]);
   const [amount, setAmount] = useState<string>("");
+  const [amountTransactionInput, setAmountTransactionInput] =
+    useState<string>("0.01");
   const [recipient, setRecipient] = useState<string>("");
   const [securityLevel, setSecurityLevel] = useState<string>("basic");
+  const { chain } = useNetwork();
+  const [chainId, setChainId] = React.useState<string>("");
+  const [isNativeTx, setIsNativeTx] = React.useState<boolean>(true);
+  const [tokenAddress, setTokenAddress] = React.useState<string | undefined>(
+    ""
+  );
+  const [decimals, setDecimals] = React.useState<number | undefined>(0);
 
   //wagmi native transaction
   const { config: configNative } = usePrepareSendTransaction({
     to: recipient,
-    value: amount ? BigInt(utils.parseEther(amount).toString()) : undefined,
+    value: amountTransactionInput
+      ? BigInt(utils.parseEther(amountTransactionInput).toString())
+      : undefined,
   });
   const { data: dataNative, sendTransaction } =
     useSendTransaction(configNative);
@@ -26,7 +55,24 @@ const TransactionDetail: React.FC = () => {
       hash: dataNative?.hash,
     });
 
-  //wagmi native transaction
+  // wagmi erc20 transaction
+  const { config } = usePrepareContractWrite({
+    address: tokenAddress as `0x${string}` | undefined,
+    abi: ERC20,
+    functionName: "transfer",
+    args: [
+      recipient,
+      BigInt(utils.parseEther(amountTransactionInput).toString()),
+    ],
+  });
+
+  const { data, write } = useContractWrite(config);
+
+  const { isLoading, isSuccess } = useWaitForTransaction({
+    hash: data?.hash,
+  });
+
+  //wagmi native test transaction
   const { config: configTest } = usePrepareSendTransaction({
     to: recipient,
     value: BigInt(utils.parseEther("0.00169").toString()),
@@ -38,6 +84,55 @@ const TransactionDetail: React.FC = () => {
     useWaitForTransaction({
       hash: dataTest?.hash,
     });
+
+  const handleAmountChange = (event: any) => {
+    const inputValue = event.target.value;
+    setAmount(inputValue);
+
+    if (inputValue === "") {
+      if (decimals != 18 && decimals) {
+        const amount: string = (
+          Number("0.001") / Number(10 ** (18 - decimals))
+        ).toFixed(18);
+        setAmount(amount);
+        return;
+      } else {
+        setAmount("0.001");
+        return;
+      }
+    }
+
+    if (decimals != 18 && decimals) {
+      const amountTransactionInput: string = (
+        Number(inputValue) / Number(10 ** (18 - decimals))
+      ).toFixed(18);
+      setAmountTransactionInput(amountTransactionInput);
+    } else {
+      setAmountTransactionInput(inputValue as string);
+    }
+  };
+
+  React.useEffect(() => {
+    if (chain) {
+      setSelectedToken(tokensDetails[0]);
+      if (chain.network == "matic") {
+        setSelectedToken(tokensDetails[1]);
+      }
+      setChainId(chain.network);
+    }
+  }, [chain]);
+
+  React.useEffect(() => {
+    if (selectedToken && chain) {
+      setTokenAddress(selectToken(selectedToken.label, chain.network));
+      setDecimals(selectTokenDecimals(selectedToken.label));
+      if (selectedToken.label == "ETH" || selectedToken.label == "MATIC") {
+        setIsNativeTx(true);
+      } else {
+        setIsNativeTx(false);
+      }
+    }
+  }, [selectedToken]);
 
   return (
     <main className="flex min-h-screen flex-col items-center  justify-between p-24">
@@ -60,27 +155,38 @@ const TransactionDetail: React.FC = () => {
             min="0.000000000000000001"
             step={0.01}
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={handleAmountChange}
           />
           <select
             defaultValue="ETH"
             className="h-[35px] bg-blackA2 shadow-blackA6 rounded-r px-[10px]  outline-none focus:shadow-[0_0_0_2px_black] selection:color-white selection:bg-black leading-none text-black shadow-[0_0_0_1px] border-l-0"
+            onChange={(e) => {
+              const selectedValue = e.target.value;
+              const selectedToken = tokensDetails.find(
+                (token) => token.label === selectedValue
+              );
+              if (selectedToken) {
+                setSelectedToken(selectedToken);
+              }
+            }}
           >
-            <option value="ETH" data-placeholder="0.00">
-              {"ETH"}
-            </option>
-            <option value="USDT" data-placeholder="0.00">
-              {"USDC"}
-            </option>
-            <option value="USDC" data-placeholder="0.00">
-              {"USDT"}
-            </option>
-            <option value="DAI" data-placeholder="0.00">
-              {"DAI"}
-            </option>
-            <option value="MATIC" data-placeholder="0.00">
-              {"MATIC"}
-            </option>
+            {tokensDetails
+              .filter((token) => {
+                if (chainId === "matic") {
+                  return token.label !== "ETH";
+                } else {
+                  return token.label !== "MATIC";
+                }
+              })
+              .map((token) => (
+                <option
+                  value={token.label}
+                  key={token.label}
+                  data-placeholder="0.00"
+                >
+                  {token.label}
+                </option>
+              ))}
           </select>
           <br />
           <br />
@@ -190,7 +296,7 @@ const TransactionDetail: React.FC = () => {
               isLoadingNative || !sendTransaction || !recipient || !amount
             }
             type="button"
-            onClick={() => sendTransaction?.()}
+            onClick={isNativeTx ? () => sendTransaction?.() : () => write?.()}
           >
             {isLoadingNative ? "Sending..." : "Send"}
           </button>

@@ -9,29 +9,29 @@ import {
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import {
   mainnet,
+  goerli,
   polygon,
+  polygonMumbai,
   optimism,
   arbitrum,
   scrollSepolia,
   scrollTestnet,
-  base,
-  goerli,
-  polygonMumbai,
 } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
     mainnet,
+    goerli,
     polygon,
+    polygonMumbai,
     optimism,
     arbitrum,
-    base,
     scrollSepolia,
     scrollTestnet,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true"
-      ? [goerli, polygonMumbai]
-      : []),
+    // ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true"
+    //   ? [goerli, polygonMumbai]
+    //   : []),
   ],
   [publicProvider()]
 );
@@ -40,7 +40,7 @@ const projectId = process.env.NEXT_PUBLIC_WALLET_CONNECT_ID!;
 
 const { wallets } = getDefaultWallets({
   appName: "Umbrella",
-  projectId: '4b498b3f9a843edfed85307c445b731f',
+  projectId: "4b498b3f9a843edfed85307c445b731f",
   chains,
 });
 
