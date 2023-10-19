@@ -23,8 +23,10 @@ interface TransactionData {
 
 const TestTransaction: React.FC<{
   goBack: () => void;
+  onContinue: () => void;
   transactionData: TransactionData | undefined;
-}> = ({ goBack, transactionData }) => {
+  setEtherscanLink: React.Dispatch<React.SetStateAction<string>>;
+}> = ({ goBack, onContinue, transactionData, setEtherscanLink }) => {
   const amount = transactionData?.amount ?? "0"; // default to '0'
 
   //wagmi native transaction
@@ -71,6 +73,13 @@ const TestTransaction: React.FC<{
     useWaitForTransaction({
       hash: dataTest?.hash,
     });
+
+  React.useEffect(() => {
+    if (isSuccessTest) {
+      setEtherscanLink(`https://goerli.etherscan.io/tx/${dataTest?.hash}`);
+      onContinue();
+    }
+  }, [isSuccessTest]);
 
   return (
     <main className="flex min-h-screen flex-col items-center min-w-min justify-between p-24">
@@ -162,18 +171,8 @@ const TestTransaction: React.FC<{
             type="button"
             onClick={() => sendTransactionTest?.()}
           >
-            {isLoadingNative ? "Sending..." : "Send Test Transaction"}
+            {isLoadingTest ? "Sending..." : "Send Test Transaction"}
           </button>
-          {isSuccessNative && (
-            <div>
-              {`Successfully sent {amount} ether to {recipient}`}
-              <div>
-                <a href={`https://etherscan.io/tx/${dataNative?.hash}`}>
-                  {"Etherscan"}
-                </a>
-              </div>
-            </div>
-          )}
           <button
             className="text-lg font-semibold rounded-md border-2 min-w-min border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
             type="button"
@@ -187,6 +186,15 @@ const TestTransaction: React.FC<{
               ? "Sending..."
               : "I understand, send full transaction anyway"}
           </button>
+          {isSuccessNative && (
+            <div className="font-semibold text-gray-950 min-w-min w-[500px] mr-8">
+              {`Payment successful! Check your transaction on `}
+
+              <a href={`https://etherscan.io/tx/${dataNative?.hash}`}>
+                {"Etherscan"}
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </main>
