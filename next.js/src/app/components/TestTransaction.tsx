@@ -1,12 +1,19 @@
 import React from "react";
 import * as Separator from "@radix-ui/react-separator";
 
-const TransactionDetail2: React.FC = () => {
+const TestTransaction: React.FC<{ goBack: () => void }> = ({ goBack }) => {
   return (
     <main className="flex min-h-screen flex-col items-center min-w-min justify-between p-24">
       <div className="max-w-fit min-w-min p-4 rounded-xl items-center justify-between border-2 font-sans border-gray-400 text-sm lg:flex">
         <div className="w-full min-w-min">
-          <p className="text-blue-600 font-semibold">Back</p>
+          <button
+            type="button"
+            onClick={goBack}
+            className="text-blue-600 font-semibold"
+          >
+            {"Back"}
+          </button>
+          <br />
           <br />
           <h1 className="text-3xl font-bold mb-2">
             The address is not verified
@@ -81,4 +88,4 @@ const TransactionDetail2: React.FC = () => {
   );
 };
 
-export default TransactionDetail2;
+export default TestTransaction;

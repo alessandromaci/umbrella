@@ -32,7 +32,11 @@ const Page: React.FC = () => {
           }}
         />
       ) : (
-        <TestTransaction />
+        <TestTransaction
+          goBack={() => {
+            setPageNumber(0);
+          }}
+        />
       )}
     </>
   );

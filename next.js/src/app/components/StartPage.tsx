@@ -17,9 +17,7 @@ import {
 } from "../utils/constants";
 import ERC20 from "../utils/ERC20.abi.json";
 
-const TransactionDetail: React.FC<{ onContinue: () => void }> = ({
-  onContinue,
-}) => {
+const StartPage: React.FC<{ onContinue: () => void }> = ({ onContinue }) => {
   const [selectedToken, setSelectedToken] = React.useState<{
     label: string;
     decimals: number;
@@ -332,4 +330,4 @@ const TransactionDetail: React.FC<{ onContinue: () => void }> = ({
   );
 };
 
-export default TransactionDetail;
+export default StartPage;
