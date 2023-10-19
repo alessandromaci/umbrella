@@ -12,8 +12,23 @@ import TestTransaction from "./components/TestTransaction";
 //   country: string;
 // }
 
+interface TransactionData {
+  recipient: string;
+  amount: string;
+  token: string;
+  chain: string;
+  tokenAddress: string | undefined;
+  decimals: number | undefined;
+  securityLevel: string;
+  isNativeTx: boolean;
+}
+
 const Page: React.FC = () => {
   let [pageNumber, setPageNumber] = React.useState<number>(0);
+  const [transactionData, setTransactionData] = React.useState<
+    TransactionData | undefined
+  >();
+
   return (
     <>
       <div
@@ -27,15 +42,13 @@ const Page: React.FC = () => {
       </div>
       {pageNumber === 0 ? (
         <StartPage
-          onContinue={() => {
-            setPageNumber(1);
-          }}
+          onContinue={() => setPageNumber(1)}
+          setTransactionData={setTransactionData}
         />
       ) : (
         <TestTransaction
-          goBack={() => {
-            setPageNumber(0);
-          }}
+          goBack={() => setPageNumber(0)}
+          transactionData={transactionData}
         />
       )}
     </>

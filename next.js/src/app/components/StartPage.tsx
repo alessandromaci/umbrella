@@ -1,23 +1,30 @@
 import React, { useState } from "react";
 import * as Label from "@radix-ui/react-label";
 import * as RadioGroup from "@radix-ui/react-radio-group";
-import {
-  useWaitForTransaction,
-  usePrepareSendTransaction,
-  useSendTransaction,
-  useNetwork,
-  usePrepareContractWrite,
-  useContractWrite,
-} from "wagmi";
-import { utils } from "ethers";
+import { useNetwork } from "wagmi";
 import {
   selectToken,
   selectTokenDecimals,
   tokensDetails,
 } from "../utils/constants";
-import ERC20 from "../utils/ERC20.abi.json";
 
-const StartPage: React.FC<{ onContinue: () => void }> = ({ onContinue }) => {
+interface TransactionData {
+  recipient: string;
+  amount: string;
+  token: string;
+  chain: string;
+  tokenAddress: string | undefined;
+  decimals: number | undefined;
+  securityLevel: string;
+  isNativeTx: boolean;
+}
+
+const StartPage: React.FC<{
+  onContinue: () => void;
+  setTransactionData: React.Dispatch<
+    React.SetStateAction<TransactionData | undefined>
+  >;
+}> = ({ onContinue, setTransactionData }) => {
   const [selectedToken, setSelectedToken] = React.useState<{
     label: string;
     decimals: number;
@@ -40,67 +47,9 @@ const StartPage: React.FC<{ onContinue: () => void }> = ({ onContinue }) => {
   );
   const [decimals, setDecimals] = React.useState<number | undefined>(0);
 
-  //wagmi native transaction
-  const { config: configNative } = usePrepareSendTransaction({
-    to: recipient,
-    value: amountTransactionInput
-      ? BigInt(utils.parseEther(amountTransactionInput).toString())
-      : undefined,
-  });
-  const { data: dataNative, sendTransaction } =
-    useSendTransaction(configNative);
-
-  const { isLoading: isLoadingNative, isSuccess: isSuccessNative } =
-    useWaitForTransaction({
-      hash: dataNative?.hash,
-    });
-
-  // wagmi erc20 transaction
-  const { config } = usePrepareContractWrite({
-    address: tokenAddress as `0x${string}` | undefined,
-    abi: ERC20,
-    functionName: "transfer",
-    args: [
-      recipient,
-      BigInt(utils.parseEther(amountTransactionInput).toString()),
-    ],
-  });
-
-  const { data, write } = useContractWrite(config);
-
-  const { isLoading, isSuccess } = useWaitForTransaction({
-    hash: data?.hash,
-  });
-
-  //wagmi native test transaction
-  const { config: configTest } = usePrepareSendTransaction({
-    to: recipient,
-    value: BigInt(utils.parseEther("0.00169").toString()),
-  });
-  const { data: dataTest, sendTransaction: sendTransactionTest } =
-    useSendTransaction(configTest);
-
-  const { isLoading: isLoadingTest, isSuccess: isSuccessTest } =
-    useWaitForTransaction({
-      hash: dataTest?.hash,
-    });
-
   const handleAmountChange = (event: any) => {
     const inputValue = event.target.value;
     setAmount(inputValue);
-
-    if (inputValue === "") {
-      if (decimals != 18 && decimals) {
-        const amount: string = (
-          Number("0.001") / Number(10 ** (18 - decimals))
-        ).toFixed(18);
-        setAmount(amount);
-        return;
-      } else {
-        setAmount("0.001");
-        return;
-      }
-    }
 
     if (decimals != 18 && decimals) {
       const amountTransactionInput: string = (
@@ -110,6 +59,25 @@ const StartPage: React.FC<{ onContinue: () => void }> = ({ onContinue }) => {
     } else {
       setAmountTransactionInput(inputValue as string);
     }
+  };
+
+  const handleContinue = () => {
+    if (amountTransactionInput == "" || recipient == "") {
+      console.log("not good");
+      return;
+    }
+
+    setTransactionData({
+      recipient: recipient,
+      amount: amountTransactionInput,
+      token: selectedToken.label,
+      chain: chainId,
+      tokenAddress: tokenAddress,
+      decimals: decimals,
+      securityLevel: securityLevel,
+      isNativeTx: isNativeTx,
+    });
+    onContinue();
   };
 
   React.useEffect(() => {
@@ -152,7 +120,7 @@ const StartPage: React.FC<{ onContinue: () => void }> = ({ onContinue }) => {
             type="number"
             id="amount"
             placeholder="0.05"
-            min="0.000000000000000001"
+            min="0.00001"
             step={0.01}
             value={amount}
             onChange={handleAmountChange}
@@ -287,43 +255,12 @@ const StartPage: React.FC<{ onContinue: () => void }> = ({ onContinue }) => {
           <br />
           <button
             type="button"
-            onClick={onContinue}
+            onClick={handleContinue}
             className="h-[35px] w-[520px] font-bold hover:bg-sky-500 bg-sky-600 rounded-md text-lg"
           >
             {"Continue"}
           </button>
           <br />
-          <br />
-          <button
-            className="h-[35px] w-[520px] font-bold hover:bg-sky-500 bg-sky-600 rounded-md text-lg"
-            disabled={
-              isLoadingNative || !sendTransaction || !recipient || !amount
-            }
-            type="button"
-            onClick={isNativeTx ? () => sendTransaction?.() : () => write?.()}
-          >
-            {isLoadingNative ? "Sending..." : "Send"}
-          </button>
-          {isSuccessNative && (
-            <div>
-              {`Successfully sent {amount} ether to {recipient}`}
-              <div>
-                <a href={`https://etherscan.io/tx/${dataNative?.hash}`}>
-                  {"Etherscan"}
-                </a>
-              </div>
-            </div>
-          )}
-          <br />
-          <br />
-          <button
-            className="h-[35px] w-[520px] font-bold hover:bg-sky-500 bg-sky-600 rounded-md text-lg"
-            disabled={isLoadingTest || !sendTransactionTest || !recipient}
-            type="button"
-            onClick={() => sendTransactionTest?.()}
-          >
-            {isLoadingNative ? "Sending..." : "Send test transaction"}
-          </button>
         </div>
       </div>
     </main>
