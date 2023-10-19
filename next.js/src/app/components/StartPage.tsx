@@ -144,7 +144,6 @@ const StartPage: React.FC<{
   }, [address]);
 
   return (
-
     <main className="flex min-h-screen flex-col items-center  justify-between p-24">
       <div className="max-w-5xl w-fit p-4 rounded-xl items-center justify-between border-2 font-noto text-sm lg:flex">
         <div>

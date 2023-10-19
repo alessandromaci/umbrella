@@ -2,17 +2,11 @@
 
 import React, { useState } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-//import UserProfileForm from "./components/UserProfile";
 import StartPage from "./components/StartPage";
 import TestTransaction from "./components/TestTransaction";
 import ConfirmReceipt from "./components/ConfirmReceipt";
 import AddressBook from "./components/AddressBook";
-
-// to use for tableland
-// interface UserProfile {
-//   userName: string;
-//   country: string;
-// }
+import Home from "./components/SideMenu";
 
 interface TransactionData {
   recipient: string;
@@ -38,37 +32,41 @@ const Page: React.FC = () => {
         style={{
           display: "flex",
           justifyContent: "flex-end",
-          padding: 12,
+          padding: 5,
         }}
       >
         <ConnectButton />
       </div>
-      {pageNumber === 0 ? (
-        <StartPage
-          onContinue={() => setPageNumber(1)}
-          setTransactionData={setTransactionData}
-        />
-      ) : pageNumber === 1 ? (
-        <TestTransaction
-          goBack={() => setPageNumber(0)}
-          onContinue={() => setPageNumber(2)}
-          transactionData={transactionData}
-          setEtherscanLink={setEtherscanLink}
-        />
-      ) : pageNumber === 2 ? (
-        <ConfirmReceipt
-          goBack={() => setPageNumber(1)}
-          onContinue={() => setPageNumber(3)}
-          transactionData={transactionData}
-          etherscanLink={etherscanLink}
-        />
-      ) : (
-        <AddressBook
-          goBack={() => setPageNumber(2)}
-          // onContinue={() => setPageNumber(4)}
-          transactionData={transactionData}
-        />
-      )}
+      <div style={{ display: "flex" }}>
+        <Home />
+
+        {pageNumber === 0 ? (
+          <StartPage
+            onContinue={() => setPageNumber(1)}
+            setTransactionData={setTransactionData}
+          />
+        ) : pageNumber === 1 ? (
+          <TestTransaction
+            goBack={() => setPageNumber(0)}
+            onContinue={() => setPageNumber(2)}
+            transactionData={transactionData}
+            setEtherscanLink={setEtherscanLink}
+          />
+        ) : pageNumber === 2 ? (
+          <ConfirmReceipt
+            goBack={() => setPageNumber(1)}
+            onContinue={() => setPageNumber(3)}
+            transactionData={transactionData}
+            etherscanLink={etherscanLink}
+          />
+        ) : (
+          <AddressBook
+            goBack={() => setPageNumber(2)}
+            // onContinue={() => setPageNumber(4)}
+            transactionData={transactionData}
+          />
+        )}
+      </div>
     </>
   );
 };
