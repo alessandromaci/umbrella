@@ -36,7 +36,7 @@ const StartPage: React.FC<{
   }>(tokensDetails[0]);
   const [amount, setAmount] = useState<string>("");
   const [amountTransactionInput, setAmountTransactionInput] =
-    useState<string>("0.01");
+    useState<string>("");
   const [recipient, setRecipient] = useState<string>("");
   const [securityLevel, setSecurityLevel] = useState<string>("basic");
   const { chain } = useNetwork();
@@ -46,9 +46,12 @@ const StartPage: React.FC<{
     ""
   );
   const [decimals, setDecimals] = React.useState<number | undefined>(0);
+  const [errors, setErrors] = React.useState<{
+    recipient: string;
+    amount: string;
+  }>({ recipient: "", amount: "" });
 
-  const handleAmountChange = (event: any) => {
-    const inputValue = event.target.value;
+  const handleAmountChange = (inputValue: any) => {
     setAmount(inputValue);
 
     if (decimals != 18 && decimals) {
@@ -62,7 +65,17 @@ const StartPage: React.FC<{
   };
 
   const handleContinue = () => {
-    if (amountTransactionInput == "" || recipient == "") {
+    let newErrors = { recipient: "", amount: "" };
+
+    if (recipient === "") {
+      newErrors.recipient = "Recipient address is required.";
+    }
+    if (amountTransactionInput === "") {
+      newErrors.amount = "Amount is required.";
+    }
+
+    if (newErrors.recipient || newErrors.amount) {
+      setErrors(newErrors);
       console.log("not good");
       return;
     }
@@ -123,7 +136,10 @@ const StartPage: React.FC<{
             min="0.00001"
             step={0.01}
             value={amount}
-            onChange={handleAmountChange}
+            onChange={(e) => {
+              handleAmountChange(e.target.value);
+              setErrors((prev) => ({ ...prev, amount: "" }));
+            }}
           />
           <select
             defaultValue="ETH"
@@ -156,6 +172,9 @@ const StartPage: React.FC<{
                 </option>
               ))}
           </select>
+          {errors.amount && (
+            <p className="text-red-500 mt-2">{errors.amount}</p>
+          )}
           <br />
           <br />
           <Label.Root
@@ -171,8 +190,14 @@ const StartPage: React.FC<{
             id="address"
             placeholder="Enter Recipient"
             value={recipient}
-            onChange={(e) => setRecipient(e.target.value)}
+            onChange={(e) => {
+              setRecipient(e.target.value);
+              setErrors((prev) => ({ ...prev, recipient: "" }));
+            }}
           />
+          {errors.recipient && (
+            <p className="text-red-500 mt-2">{errors.recipient}</p>
+          )}
           <br />
           <br />
           <h2 className="text-lg font-semibold my-2">
