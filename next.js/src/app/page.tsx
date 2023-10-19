@@ -6,6 +6,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import StartPage from "./components/StartPage";
 import TestTransaction from "./components/TestTransaction";
 import ConfirmReceipt from "./components/ConfirmReceipt";
+import AddressBook from "./components/AddressBook";
 
 // to use for tableland
 // interface UserProfile {
@@ -54,11 +55,18 @@ const Page: React.FC = () => {
           transactionData={transactionData}
           setEtherscanLink={setEtherscanLink}
         />
-      ) : (
+      ) : pageNumber === 2 ? (
         <ConfirmReceipt
           goBack={() => setPageNumber(1)}
+          onContinue={() => setPageNumber(3)}
           transactionData={transactionData}
           etherscanLink={etherscanLink}
+        />
+      ) : (
+        <AddressBook
+          goBack={() => setPageNumber(2)}
+          // onContinue={() => setPageNumber(4)}
+          transactionData={transactionData}
         />
       )}
     </>

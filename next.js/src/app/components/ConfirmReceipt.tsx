@@ -1,14 +1,5 @@
 import React from "react";
 import * as Separator from "@radix-ui/react-separator";
-import {
-  useWaitForTransaction,
-  usePrepareSendTransaction,
-  useSendTransaction,
-  usePrepareContractWrite,
-  useContractWrite,
-} from "wagmi";
-import { utils } from "ethers";
-import ERC20 from "../utils/ERC20.abi.json";
 
 interface TransactionData {
   recipient: string;
@@ -23,11 +14,10 @@ interface TransactionData {
 
 const ConfirmReceipt: React.FC<{
   goBack: () => void;
+  onContinue: () => void;
   transactionData: TransactionData | undefined;
   etherscanLink: string;
-}> = ({ goBack, transactionData, etherscanLink }) => {
-  const amount = transactionData?.amount ?? "0"; // default to '0'
-
+}> = ({ goBack, onContinue, transactionData, etherscanLink }) => {
   return (
     <main className="flex min-h-screen flex-col items-center min-w-min justify-between p-24">
       <div className="max-w-fit min-w-min p-4 rounded-xl items-center justify-between border-2 font-sans border-gray-400 text-sm lg:flex">
@@ -85,6 +75,7 @@ const ConfirmReceipt: React.FC<{
           <button
             className="text-lg font-semibold rounded-md border-2 min-w-min border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
             type="button"
+            onClick={onContinue}
           >
             {"Confirm"}
           </button>
