@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-const { blackA } = require("@radix-ui/colors");
+const { blackA , violet } = require("@radix-ui/colors");
 
 const config: Config = {
   content: [
@@ -17,7 +17,12 @@ const config: Config = {
       },
       colors: {
         ...blackA,
+        ...violet,
       },
+      fontFamily: {
+        outfit: ['Outfit'],
+        noto: ['Noto Sans'],
+      }  
     },
   },
   plugins: [],
