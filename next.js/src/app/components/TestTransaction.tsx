@@ -6,9 +6,12 @@ import {
   useSendTransaction,
   usePrepareContractWrite,
   useContractWrite,
+  useAccount,
 } from "wagmi";
 import { utils } from "ethers";
 import ERC20 from "../utils/ERC20.abi.json";
+import { setEtherscanBase } from "../utils/constants";
+import { sendPaymentNotification } from "../utils/push";
 
 interface TransactionData {
   recipient: string;
@@ -28,6 +31,7 @@ const TestTransaction: React.FC<{
   setEtherscanLink: React.Dispatch<React.SetStateAction<string>>;
 }> = ({ goBack, onContinue, transactionData, setEtherscanLink }) => {
   const amount = transactionData?.amount ?? "0"; // default to '0'
+  const { address } = useAccount();
 
   //wagmi native transaction
   const { config: configNative } = usePrepareSendTransaction({
@@ -80,6 +84,27 @@ const TestTransaction: React.FC<{
       onContinue();
     }
   }, [isSuccessTest]);
+
+  React.useEffect(() => {
+    if (isSuccess) {
+      if (transactionData) {
+        const etherscanLink = setEtherscanBase(
+          transactionData.chain,
+          data?.hash
+        );
+        sendPaymentNotification(address, transactionData, etherscanLink);
+      }
+    }
+    if (isSuccessNative) {
+      if (transactionData) {
+        const etherscanLink = setEtherscanBase(
+          transactionData.chain,
+          dataNative?.hash
+        );
+        sendPaymentNotification(address, transactionData, etherscanLink);
+      }
+    }
+  }, [isSuccess, isSuccessNative]);
 
   return (
     <main className="flex min-h-screen flex-col items-center min-w-min justify-between p-24">

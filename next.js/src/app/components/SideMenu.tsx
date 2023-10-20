@@ -3,7 +3,9 @@
 import React from "react";
 import * as Separator from "@radix-ui/react-separator";
 
-export default function Home() {
+const SideMenu: React.FC<{
+  onTransactions: () => void;
+}> = ({ onTransactions }) => {
   return (
     <div className="max-w-fit min-w-fit p-4 w-[17%] font-noto h-screen justify-start self-center border-r-2 border-gray-400 text-sm flex flex-col ">
       <div className="flex flex-col items-center">
@@ -27,9 +29,9 @@ export default function Home() {
         </div>
         <Separator.Root className="bg-blackA2 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px my-[13px]" />
         <div className="flex justify-between items-center">
-          <a className="font-semibold text-lg text-gray-950" href="">
-            Notifications
-          </a>{" "}
+          <button className="font-semibold text-lg text-gray-950">
+            {"Notifications"}
+          </button>{" "}
           <i className="right-arrow"></i>
         </div>
         <Separator.Root className="bg-blackA2 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px my-[13px]" />
@@ -48,9 +50,13 @@ export default function Home() {
         </div>
         <Separator.Root className="bg-blackA2 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px my-[13px]" />
         <div className="flex justify-between items-center">
-          <a className="font-semibold text-lg text-gray-950" href="">
-            Transactions
-          </a>{" "}
+          <button
+            type="button"
+            className="font-semibold text-lg text-gray-950"
+            onClick={onTransactions}
+          >
+            {"Transactions"}
+          </button>{" "}
           <i className="right-arrow"></i>
         </div>
       </div>
@@ -61,4 +67,6 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
+
+export default SideMenu;

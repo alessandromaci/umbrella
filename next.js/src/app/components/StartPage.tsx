@@ -240,7 +240,6 @@ const StartPage: React.FC<{
                     className="grow shrink-0 w-full rounded px-2.5 text-[15px] leading-none text-sky-600 shadow-[0_0_0_1px] shadow-sky-400 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-500 outline-none"
                     id="address"
                     placeholder="0x..."
-                    value={recipient}
                     onChange={(e) => {
                       setRecipient(e.target.value);
                       setErrors((prev) => ({ ...prev, recipient: "" }));
@@ -254,14 +253,18 @@ const StartPage: React.FC<{
               >
                 <fieldset className="mb-2 w-full flex flex-col justify-start">
                   <select
+                    defaultValue=""
                     onChange={(e) => {
                       setRecipient(e.target.value);
                     }}
                     className="grow shrink-0 rounded px-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] shadow-sky-400 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-500 outline-none"
                   >
+                    <option key={address} value={address}>
+                      {`-- select verified address --`}
+                    </option>
                     {Object.entries(addressBook).map(([address, name]) => (
                       <option key={address} value={address}>
-                        {`${name}.brella`}
+                        {`${name}.umbrella`}
                       </option>
                     ))}
                   </select>

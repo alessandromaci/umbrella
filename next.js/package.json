@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@nextui-org/react": "^2.1.13",
+    "@pushprotocol/restapi": "^1.4.28",
     "@radix-ui/colors": "^3.0.0",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-radio-group": "^1.1.3",

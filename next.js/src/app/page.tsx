@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import StartPage from "./components/StartPage";
 import TestTransaction from "./components/TestTransaction";
 import ConfirmReceipt from "./components/ConfirmReceipt";
 import AddressBook from "./components/AddressBook";
-import Home from "./components/SideMenu";
+import SideMenu from "./components/SideMenu";
+import Notifications from "./components/Notifications";
 
 interface TransactionData {
   recipient: string;
@@ -38,7 +39,7 @@ const Page: React.FC = () => {
         <ConnectButton />
       </div>
       <div style={{ display: "flex" }}>
-        <Home />
+        <SideMenu onTransactions={() => setPageNumber(11)} />
 
         {pageNumber === 0 ? (
           <StartPage
@@ -59,12 +60,16 @@ const Page: React.FC = () => {
             transactionData={transactionData}
             etherscanLink={etherscanLink}
           />
-        ) : (
+        ) : pageNumber === 3 ? (
           <AddressBook
             goBack={() => setPageNumber(2)}
             // onContinue={() => setPageNumber(4)}
             transactionData={transactionData}
           />
+        ) : pageNumber === 11 ? (
+          <Notifications goBack={() => setPageNumber(0)} />
+        ) : (
+          <></>
         )}
       </div>
     </>
