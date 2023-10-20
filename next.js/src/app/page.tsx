@@ -36,7 +36,7 @@ const Page: React.FC = () => {
           padding: 5,
         }}
       >
-        <ConnectButton />
+        <ConnectButton chainStatus="icon" />
       </div>
       <div style={{ display: "flex" }}>
         <SideMenu onTransactions={() => setPageNumber(11)} />
