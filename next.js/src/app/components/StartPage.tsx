@@ -144,7 +144,7 @@ const StartPage: React.FC<{
   }, [address]);
 
   return (
-      <div className="max-w-fit w-full p-4 rounded-xl items-center justify-between border-2 font-noto text-sm lg:flex">
+      <div className="max-w-fit w-full max-h-90 p-4 rounded-xl items-center justify-between border-2 font-noto text-sm lg:flex">
         <div>
           <h1 className="text-3xl ml-5 mt-3 font-bold mb-2">New Transaction</h1>
           <br />
