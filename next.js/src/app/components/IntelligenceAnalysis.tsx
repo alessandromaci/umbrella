@@ -47,7 +47,6 @@ const IntelligenceAnalysis: React.FC<{
     setIsAnalysisCompleted(false);
     if (transactionData) {
       const recipient = transactionData.recipient;
-      // Use Etherscan API to get transaction history of recipient
       const apiKey = process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY;
       if (!apiKey) {
         console.error("Etherscan API key is not set");
@@ -80,14 +79,19 @@ const IntelligenceAnalysis: React.FC<{
   };
 
   const analyzeHistory = (history: EtherscanTransaction[]): any => {
+    // A low number of transaction might indicate that the recipient has not used this account regularly
     const numberOfTransactions = history.length;
 
+    //This can give an idea of the typical amount of funds the recipient handles.
+    //A low number of transactions with high values or vice versa could be suspicious.
     const totalValue = history.reduce(
       (acc, tx) => acc + parseFloat(utils.formatEther(tx.value)),
       0
     );
     const averageTransactionValue = totalValue / numberOfTransactions;
 
+    // If the recipient has transactions at regular intervals, it may indicate automated or recurring payments, which is generally normal.
+    //However, if there are sudden bursts of transactions, it may require further investigation.
     const timestamps = history.map((tx) => parseInt(tx.timeStamp) * 1000);
     const timeIntervals = timestamps
       .slice(1)
@@ -95,10 +99,12 @@ const IntelligenceAnalysis: React.FC<{
     const averageTimeInterval =
       timeIntervals.reduce((a, b) => a + b, 0) / timeIntervals.length;
 
+    // A consistently high gas price might indicate the recipient is willing to pay more to expedite their transactions, which could be seen as suspicious.
     const highGasPrices = history.filter(
       (tx) => parseFloat(utils.formatEther(tx.gasPrice)) > 100
     ).length;
 
+    // Interactions with unknown or suspicious contracts could be a red flag.
     const contractInteractions = history.filter(
       (tx) => tx.to && tx.input !== "0x"
     ).length;
