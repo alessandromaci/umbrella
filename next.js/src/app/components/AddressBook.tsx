@@ -24,8 +24,9 @@ interface Schema {
 
 const AddressBook: React.FC<{
   goBack: () => void;
+  onContinue: () => void;
   transactionData: TransactionData | undefined;
-}> = ({ goBack, transactionData }) => {
+}> = ({ goBack, onContinue, transactionData }) => {
   const [recipientName, setRecipientName] = React.useState<string>("");
   const { address } = useAccount();
   const signer = useSigner();
