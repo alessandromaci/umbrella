@@ -27,9 +27,16 @@ interface TransactionData {
 const TestTransaction: React.FC<{
   goBack: () => void;
   onContinue: () => void;
+  onAnalysis: () => void;
   transactionData: TransactionData | undefined;
   setEtherscanLink: React.Dispatch<React.SetStateAction<string>>;
-}> = ({ goBack, onContinue, transactionData, setEtherscanLink }) => {
+}> = ({
+  goBack,
+  onContinue,
+  onAnalysis,
+  transactionData,
+  setEtherscanLink,
+}) => {
   const amount = transactionData?.amount ?? "0"; // default to '0'
   const { address } = useAccount();
 
@@ -198,19 +205,30 @@ const TestTransaction: React.FC<{
           >
             {isLoadingTest ? "Sending..." : "Send Test Transaction"}
           </button>
-          <button
-            className="text-lg font-semibold rounded-md border-2 min-w-min border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
-            type="button"
-            onClick={
-              transactionData?.isNativeTx
-                ? () => sendTransaction?.()
-                : () => write?.()
-            }
-          >
-            {isLoadingNative
-              ? "Sending..."
-              : "I understand, send full transaction anyway"}
-          </button>
+          {transactionData?.securityLevel == "enhanced" ? (
+            <button
+              className="text-lg font-semibold rounded-md border-2 min-w-min border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
+              type="button"
+              onClick={onAnalysis}
+            >
+              {"Skip the testing. Run analysis"}
+            </button>
+          ) : (
+            <button
+              className="text-lg font-semibold rounded-md border-2 min-w-min border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
+              type="button"
+              onClick={
+                transactionData?.isNativeTx
+                  ? () => sendTransaction?.()
+                  : () => write?.()
+              }
+            >
+              {isLoadingNative
+                ? "Sending..."
+                : "I understand, send full transaction anyway"}
+            </button>
+          )}
+
           {isSuccessNative && (
             <div className="font-semibold text-gray-950 min-w-min w-[500px] mr-8">
               {`Payment successful! Check your transaction on `}

@@ -8,6 +8,7 @@ import ConfirmReceipt from "./components/ConfirmReceipt";
 import AddressBook from "./components/AddressBook";
 import SideMenu from "./components/SideMenu";
 import Notifications from "./components/Notifications";
+import IntelligenceAnalysis from "./components/IntelligenceAnalysis";
 
 interface TransactionData {
   recipient: string;
@@ -36,7 +37,7 @@ const Page: React.FC = () => {
           padding: 5,
         }}
       >
-        <ConnectButton />
+        <ConnectButton chainStatus="icon" />
       </div>
       <div style={{ display: "flex" }}>
         <SideMenu onTransactions={() => setPageNumber(11)} />
@@ -50,6 +51,7 @@ const Page: React.FC = () => {
           <TestTransaction
             goBack={() => setPageNumber(0)}
             onContinue={() => setPageNumber(2)}
+            onAnalysis={() => setPageNumber(4)}
             transactionData={transactionData}
             setEtherscanLink={setEtherscanLink}
           />
@@ -63,7 +65,13 @@ const Page: React.FC = () => {
         ) : pageNumber === 3 ? (
           <AddressBook
             goBack={() => setPageNumber(2)}
-            // onContinue={() => setPageNumber(4)}
+            onContinue={() => setPageNumber(4)}
+            transactionData={transactionData}
+          />
+        ) : pageNumber === 4 ? (
+          <IntelligenceAnalysis
+            goBack={() => setPageNumber(0)}
+            onContinue={() => setPageNumber(5)}
             transactionData={transactionData}
           />
         ) : pageNumber === 11 ? (
