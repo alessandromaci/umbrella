@@ -144,8 +144,7 @@ const StartPage: React.FC<{
   }, [address]);
 
   return (
-    <main className="flex min-h-screen flex-col items-center  justify-between p-24">
-      <div className="max-w-5xl w-fit p-4 rounded-xl items-center justify-between border-2 font-noto text-sm lg:flex">
+      <div className="max-w-fit w-full p-4 rounded-xl items-center justify-between border-2 font-noto text-sm lg:flex">
         <div>
           <h1 className="text-3xl ml-5 mt-3 font-bold mb-2">New Transaction</h1>
           <br />
@@ -357,13 +356,12 @@ const StartPage: React.FC<{
           <button
             type="button"
             onClick={handleContinue}
-            className="h-[35px] w-[520px] font-bold hover:bg-sky-500 bg-sky-600 rounded-md text-lg"
+            className="h-[35px] w-full font-bold hover:bg-sky-400 bg-sky-500 rounded-md text-lg"
           >
             {"Continue"}
           </button>
         </div>
       </div>
-    </main>
   );
 };
 
