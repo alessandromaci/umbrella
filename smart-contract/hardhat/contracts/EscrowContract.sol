@@ -43,7 +43,7 @@ contract EscrowContract {
     mapping (address => uint256[]) public agreementIdsByParticipant;
 
     // Events
-    event AgreementCreated(uint256 agreementId, address indexed buyer, address indexed seller, uint256 value, address tokenAddress);
+    event AgreementCreated(uint256 agreementId, address indexed buyer, address indexed seller, uint256 value, address tokenAddress, bytes evidenceCID);
     event EvidenceAdded(uint256 agreementId, bytes evidenceCID);
     event AgreementConfirmed(uint256 agreementId);
     event ReceiptConfirmed(uint256 agreementId);
@@ -62,7 +62,7 @@ contract EscrowContract {
      * @param value Amount to be escrowed.
      * @param tokenAddress Address of the ERC20 token (use ethereum for ETH).
      */
-    function createAgreement(address payable buyer, address payable seller, uint256 value, address tokenAddress) public payable {
+    function createAgreement(address payable buyer, address payable seller, uint256 value, address tokenAddress, bytes memory evidenceCID) public payable {
         // Check sender is buyer
         if (msg.sender != buyer) revert Errors.NotABuyer();
 
@@ -74,13 +74,13 @@ contract EscrowContract {
             if (IERC20(tokenAddress).balanceOf(address(this)) < value) revert Errors.InsufficientPayment();
         }
 
-        Agreement memory agreement = Agreement(buyer, seller, value, tokenAddress, false, Status.No_Litigation, "");
+        Agreement memory agreement = Agreement(buyer, seller, value, tokenAddress, false, Status.No_Litigation, evidenceCID);
         uint256 agreementId = numAgreements++;
         agreements[agreementId] = agreement;
         agreementIdsByParticipant[buyer].push(agreementId);
         agreementIdsByParticipant[seller].push(agreementId);
 
-        emit AgreementCreated(agreementId, buyer, seller, value, tokenAddress);
+        emit AgreementCreated(agreementId, buyer, seller, value, tokenAddress, evidenceCID);
     }
 
     /**

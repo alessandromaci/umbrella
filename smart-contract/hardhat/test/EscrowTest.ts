@@ -33,9 +33,16 @@ describe("EscrowContract", async () => {
 
     await escrow
       .connect(buyer)
-      .createAgreement(buyer.address, seller.address, value, thirdPartyToken, {
+      .createAgreement(
+        buyer.address,
+        seller.address,
         value,
-      });
+        thirdPartyToken,
+        evidence,
+        {
+          value,
+        }
+      );
     agreementId = 0;
     const agreement = await escrow.agreements(agreementId);
     expect(agreement.buyer).to.equal(buyer.address);
@@ -47,9 +54,16 @@ describe("EscrowContract", async () => {
     const value = ethers.parseEther("1.0");
     await escrow
       .connect(buyer)
-      .createAgreement(buyer.address, seller.address, value, thirdPartyToken, {
+      .createAgreement(
+        buyer.address,
+        seller.address,
         value,
-      });
+        thirdPartyToken,
+        evidence,
+        {
+          value,
+        }
+      );
     agreementId = 0;
 
     const evidenceCID = evidence;
@@ -63,13 +77,20 @@ describe("EscrowContract", async () => {
     const value: bigint = ethers.parseEther("1.0");
     await escrow
       .connect(buyer)
-      .createAgreement(buyer.address, seller.address, value, thirdPartyToken, {
+      .createAgreement(
+        buyer.address,
+        seller.address,
         value,
-      });
+        thirdPartyToken,
+        evidence,
+        {
+          value,
+        }
+      );
     agreementId = 0;
     const remainingBalance: bigint = await ethers.provider.getBalance(buyer);
     expect((initBalance - remainingBalance).toString()).to.equal(
-      "1000273123897838696"
+      "1000369300307827978"
     );
   });
 
@@ -77,9 +98,16 @@ describe("EscrowContract", async () => {
     const value = ethers.parseEther("1.0");
     await escrow
       .connect(buyer)
-      .createAgreement(buyer.address, seller.address, value, thirdPartyToken, {
+      .createAgreement(
+        buyer.address,
+        seller.address,
         value,
-      });
+        thirdPartyToken,
+        evidence,
+        {
+          value,
+        }
+      );
 
     agreementId = 0;
     await escrow.connect(buyer).buyerReclaims(agreementId);
@@ -91,9 +119,16 @@ describe("EscrowContract", async () => {
     const value = ethers.parseEther("1.0");
     await escrow
       .connect(buyer)
-      .createAgreement(buyer.address, seller.address, value, thirdPartyToken, {
+      .createAgreement(
+        buyer.address,
+        seller.address,
         value,
-      });
+        thirdPartyToken,
+        evidence,
+        {
+          value,
+        }
+      );
     agreementId = 0;
     await escrow.connect(seller).sellerConfirmsAgreement(agreementId);
     const agreement = await escrow.agreements(agreementId);
@@ -104,9 +139,16 @@ describe("EscrowContract", async () => {
     const value = ethers.parseEther("1.0");
     await escrow
       .connect(buyer)
-      .createAgreement(buyer.address, seller.address, value, thirdPartyToken, {
+      .createAgreement(
+        buyer.address,
+        seller.address,
         value,
-      });
+        thirdPartyToken,
+        evidence,
+        {
+          value,
+        }
+      );
     agreementId = 0;
     await escrow.connect(seller).sellerConfirmsAgreement(agreementId);
     const isLocked = await escrow.agreementIsLocked(agreementId);
@@ -117,9 +159,16 @@ describe("EscrowContract", async () => {
     const value = ethers.parseEther("1.0");
     await escrow
       .connect(buyer)
-      .createAgreement(buyer.address, seller.address, value, thirdPartyToken, {
+      .createAgreement(
+        buyer.address,
+        seller.address,
         value,
-      });
+        thirdPartyToken,
+        evidence,
+        {
+          value,
+        }
+      );
     agreementId = 0;
     await escrow.connect(seller).sellerConfirmsAgreement(agreementId);
     await escrow.connect(buyer).confirmReceived(agreementId);
@@ -131,9 +180,16 @@ describe("EscrowContract", async () => {
     const value = ethers.parseEther("1.0");
     await escrow
       .connect(buyer)
-      .createAgreement(buyer.address, seller.address, value, thirdPartyToken, {
+      .createAgreement(
+        buyer.address,
+        seller.address,
         value,
-      });
+        thirdPartyToken,
+        evidence,
+        {
+          value,
+        }
+      );
     agreementId = 0;
     await escrow.connect(buyer).buyerRejectsReceipt(agreementId);
     const agreement = await escrow.agreements(agreementId);
@@ -144,9 +200,16 @@ describe("EscrowContract", async () => {
     const value = ethers.parseEther("1.0");
     await escrow
       .connect(buyer)
-      .createAgreement(buyer.address, seller.address, value, thirdPartyToken, {
+      .createAgreement(
+        buyer.address,
+        seller.address,
         value,
-      });
+        thirdPartyToken,
+        evidence,
+        {
+          value,
+        }
+      );
     agreementId = 0;
     await escrow.connect(seller).sellerConfirmsAgreement(agreementId);
     await escrow.connect(buyer).buyerRejectsReceipt(agreementId);
@@ -159,9 +222,16 @@ describe("EscrowContract", async () => {
     const value = ethers.parseEther("1.0");
     await escrow
       .connect(buyer)
-      .createAgreement(buyer.address, seller.address, value, thirdPartyToken, {
+      .createAgreement(
+        buyer.address,
+        seller.address,
         value,
-      });
+        thirdPartyToken,
+        evidence,
+        {
+          value,
+        }
+      );
     agreementId = 0;
     await escrow.connect(seller).sellerConfirmsAgreement(agreementId);
     await escrow.connect(buyer).buyerRejectsReceipt(agreementId);
