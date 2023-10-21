@@ -75,7 +75,6 @@ const Page: React.FC = () => {
             goBack={() => setPageNumber(0)}
             onContinue={() => setPageNumber(6)}
             transactionData={transactionData}
-            setEtherscanLink={setEtherscanLink}
           />
         ) : pageNumber === 11 ? (
           <Notifications goBack={() => setPageNumber(0)} />
