@@ -1,6 +1,6 @@
 import * as React from "react"
 
-function BasicFlow(props) {
+function BasicFlow(props:any) {
   return (
     <svg
       width={900}
