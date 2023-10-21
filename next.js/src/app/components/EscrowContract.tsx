@@ -149,7 +149,7 @@ const EscrowContract: React.FC<{
   //   }, [isSuccess, isSuccessNative]);
 
   return (
-    <div className="max-w-fit min-w-min p-4 rounded-xl items-center justify-between border-2 font-sans border-gray-400 text-sm lg:flex">
+    <div className="max-w-fit min-w-min p-4 rounded-xl items-center justify-between border-2 text-white font-sans border-gray-400 text-sm lg:flex">
       <div className="w-full min-w-min">
         <button
           type="button"
@@ -159,7 +159,7 @@ const EscrowContract: React.FC<{
           {"Back"}
         </button>
         <h1 className="text-3xl font-bold mb-2">{"Create Escrow Contract"}</h1>
-        <p className="font-semibold text-gray-950 min-w-min w-[450px]">
+        <p className="font-semibold min-w-min w-[600px]">
           {
             "Escrow contracts are the last step of advanced security, giving you a further level of protection by utilising third party smart contract to hold funds until a job is completed."
           }
@@ -173,7 +173,7 @@ const EscrowContract: React.FC<{
         <h1 className="text-lg font-bold mb-2">{"Transaction details"}</h1>
         <div className="flex flex-col min-w-min font-medium h-fit mb-4 gap-2">
           <div className="h-fit flex flex-row rounded-2xl py-0 px-2">
-            <p className="text-gray-950">{"Wallet:"}</p> &nbsp;
+            <p>{"Wallet:"}</p> &nbsp;
             <p className="tracking-tighter">
               {" "}
               {transactionData?.recipient.slice(0, 4)}
@@ -181,33 +181,33 @@ const EscrowContract: React.FC<{
               {transactionData?.recipient.slice(-4)}
             </p>
           </div>
-          <Separator.Root className="bg-violet6 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px my-[1px]" />
+          <Separator.Root className="bg-gray-400 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px my-[1px]" />
           <div className="h-fit flex flex-row rounded-2xl py-0 px-2">
-            <p className="text-gray-950">{"Asset:"}</p> &nbsp;
+            <p>{"Asset:"}</p> &nbsp;
             <p className="tracking-tighter">{`${transactionData?.amount} ${transactionData?.token}`}</p>
           </div>
-          <Separator.Root className="bg-violet6 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px my-[1px]" />
+          <Separator.Root className="bg-gray-400 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px my-[1px]" />
           <div className="h-fit flex flex-row rounded-2xl py-0 px-2">
-            <p className="text-gray-950">{"Network:"}</p> &nbsp;
+            <p>{"Network:"}</p> &nbsp;
             <p className="tracking-tighter">{transactionData?.chain}</p>
           </div>
         </div>
         <h1 className="text-lg font-bold mb-2">{"Contract details"}</h1>
-        <p className="text-base font-medium leading-[35px] text-black">
+        <p className="text-base font-medium leading-[35px]">
           {"Name of Contract"}
         </p>
         <input
-          className="grow shrink-0 w-full rounded px-2.5 text-[15px] leading-none text-sky-600 shadow-[0_0_0_1px] shadow-sky-500 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-600 mb-4 outline-none"
+          className="grow shrink-0 bg-zinc-900 w-full rounded px-2.5 text-[15px] leading-none text-sky-600 shadow-[0_0_0_1px] shadow-sky-500 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-600 mb-4 outline-none"
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Name of Contract"
         />
-        <p className="text-base font-medium leading-[35px] text-black">
+        <p className="text-base font-medium leading-[35px]">
           {"Contract Terms"}
         </p>
         <input
-          className="grow shrink-0 w-full rounded px-2.5 text-[15px] leading-none text-sky-600 shadow-[0_0_0_1px] shadow-sky-500 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-600 mb-4 outline-none"
+          className="grow shrink-0 w-full rounded px-2.5 text-[15px] bg-zinc-900 leading-none text-sky-600 shadow-[0_0_0_1px] shadow-sky-500 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-600 mb-4 outline-none"
           id="terms"
           value={terms}
           onChange={(e) => setTerms(e.target.value)}

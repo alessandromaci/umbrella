@@ -9,6 +9,7 @@ import SideMenu from "./components/SideMenu";
 import Notifications from "./components/Notifications";
 import IntelligenceAnalysis from "./components/IntelligenceAnalysis";
 import EscrowContract from "./components/EscrowContract";
+import HomePage from "./components/HomePage";
 
 interface TransactionData {
   recipient: string;
@@ -22,7 +23,7 @@ interface TransactionData {
 }
 
 const Page: React.FC = () => {
-  let [pageNumber, setPageNumber] = React.useState<number>(0);
+  let [pageNumber, setPageNumber] = React.useState<number>(11);
   const [transactionData, setTransactionData] = React.useState<
     TransactionData | undefined
   >();
@@ -30,14 +31,16 @@ const Page: React.FC = () => {
 
   return (
     <div className="w-full flex">
-      <div className="side-menu w-[23%]">
+      <div className="side-menu w-[26%]">
         <SideMenu
           onTransactions={() => setPageNumber(11)}
           onStart={() => setPageNumber(0)}
         />
       </div>
       <div className="place-content-center p-6 flex w-full  ">
-        {pageNumber === 0 ? (
+        { pageNumber === -1 ? (
+          <HomePage />
+        ) : pageNumber === 0 ? (
           <StartPage
             onContinue={() => setPageNumber(1)}
             onContract={() => setPageNumber(5)}
