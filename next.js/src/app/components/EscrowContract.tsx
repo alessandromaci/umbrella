@@ -10,8 +10,11 @@ import {
 } from "wagmi";
 import { utils } from "ethers";
 import ERC20 from "../utils/ERC20.abi.json";
+import EscrowContractABI from "../utils/EscrowContract.abi.json";
+
 import { setEtherscanBase } from "../utils/constants";
 import { sendPaymentNotification } from "../utils/push";
+//import { uploadIpfs } from "../utils/ipfs";
 
 interface TransactionData {
   recipient: string;
@@ -28,9 +31,13 @@ const EscrowContract: React.FC<{
   goBack: () => void;
   onContinue: () => void;
   transactionData: TransactionData | undefined;
-  setEtherscanLink: React.Dispatch<React.SetStateAction<string>>;
-}> = ({ goBack, onContinue, transactionData, setEtherscanLink }) => {
+}> = ({ goBack, onContinue, transactionData }) => {
   const amount = transactionData?.amount ?? "0"; // default to '0'
+  const [name, setName] = React.useState<string>("");
+  const [terms, setTerms] = React.useState<string>("");
+  const [evidence, setEvidence] = React.useState<any>("");
+  const [ipfsLoading, setIpfsLoading] = React.useState<boolean>(false);
+
   const { address } = useAccount();
 
   //wagmi native transaction
@@ -64,6 +71,50 @@ const EscrowContract: React.FC<{
   const { isLoading, isSuccess } = useWaitForTransaction({
     hash: data?.hash,
   });
+
+  //create contract agreement (mumbai)
+  const { config: createAgreement } = usePrepareContractWrite({
+    address: "0xf0b1c1b99f2d9c94a57ec2da45915cf1fd3e47a7",
+    abi: EscrowContractABI,
+    functionName: "createAgreement",
+    args: [
+      address,
+      transactionData?.recipient,
+      BigInt(utils.parseEther(amount).toString()),
+      transactionData?.tokenAddress,
+      evidence,
+    ],
+  });
+
+  const { data: dataCreateAgreement, write: writeCreateAgreement } =
+    useContractWrite(createAgreement);
+
+  const {
+    isLoading: isLoadingCreateAgreement,
+    isSuccess: isSuccessCreateAgreement,
+  } = useWaitForTransaction({
+    hash: dataCreateAgreement?.hash,
+  });
+
+  const createAgreementRequest = async () => {
+    try {
+      setIpfsLoading(true);
+      const data = {
+        contractName: name,
+        contractTerms: terms,
+        from: address,
+        value: amount,
+        tokenAddress: transactionData?.tokenAddress,
+      };
+      //   const { path } = await uploadIpfs(data).finally(() => {
+      //     setIpfsLoading(false);
+      //   });
+      //setEvidence(path);
+    } catch (error) {
+      console.error(error);
+      setIpfsLoading(false);
+    }
+  };
 
   //   React.useEffect(() => {
   //     if (isSuccess) {
@@ -136,19 +187,38 @@ const EscrowContract: React.FC<{
         </p>
         <input
           className="grow shrink-0 w-full rounded px-2.5 text-[15px] leading-none text-sky-600 shadow-[0_0_0_1px] shadow-sky-500 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-600 mb-4 outline-none"
-          id="address"
+          id="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           placeholder="Name of Contract"
+        />
+        <p className="text-base font-medium leading-[35px] text-black">
+          {"Contract Terms"}
+        </p>
+        <input
+          className="grow shrink-0 w-full rounded px-2.5 text-[15px] leading-none text-sky-600 shadow-[0_0_0_1px] shadow-sky-500 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-600 mb-4 outline-none"
+          id="terms"
+          value={terms}
+          onChange={(e) => setTerms(e.target.value)}
+          placeholder="I expect to..."
         />
         <div className="h-fit flex flex-row rounded-2xl gap-4 py-0 mb-4">
           <button className="text-md font-semibold rounded-lg h-fit border min-w-min p-2 border-sky-500 text-gray-00 w-[35%] hover:bg-sky-400 bg-sky-500 mb-1">
             {"Use Template"}
           </button>
-          <button className="text-md font-semibold rounded-lg h-fit border min-w-min border-sky-500 p-2 bg-gray-00 w-[35%] hover:text-sky-400 hover:border-sky-400 text-sky-500 mb-1">
+          {/* <button className="text-md font-semibold rounded-lg h-fit border min-w-min border-sky-500 p-2 bg-gray-00 w-[35%] hover:text-sky-400 hover:border-sky-400 text-sky-500 mb-1">
             {"Create New"}
-          </button>
+          </button> */}
         </div>
 
-        <button className="text-lg font-semibold rounded-lg p-2 min-w-min text-gray-00 w-full hover:bg-sky-400 bg-sky-500 mb-1">
+        <button
+          className="text-lg font-semibold rounded-lg p-2 min-w-min text-gray-00 w-full hover:bg-sky-400 bg-sky-500 mb-1"
+          type="button"
+          onClick={() => {
+            createAgreementRequest();
+          }}
+        >
+          {/* writeCreateAgreement?.();  */}
           {"Send Contract"}
         </button>
       </div>
