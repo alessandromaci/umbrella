@@ -1,6 +1,15 @@
 import React from "react";
 import * as Separator from "@radix-ui/react-separator";
 import { utils } from "ethers";
+import {
+  useWaitForTransaction,
+  usePrepareSendTransaction,
+  useSendTransaction,
+  usePrepareContractWrite,
+  useContractWrite,
+  useAccount,
+} from "wagmi";
+import ERC20 from "../utils/ERC20.abi.json";
 
 interface TransactionData {
   recipient: string;
@@ -42,6 +51,39 @@ const IntelligenceAnalysis: React.FC<{
   const [isAnalysisCompleted, setIsAnalysisCompleted] =
     React.useState<boolean>(false);
   const [report, setReport] = React.useState<any>();
+  const amount = transactionData?.amount ?? "0";
+
+  //wagmi native transaction
+  const { config: configNative } = usePrepareSendTransaction({
+    to: transactionData?.recipient,
+    value: transactionData?.amount
+      ? BigInt(utils.parseEther(transactionData?.amount).toString())
+      : undefined,
+  });
+  const { data: dataNative, sendTransaction } =
+    useSendTransaction(configNative);
+
+  const { isLoading: isLoadingNative, isSuccess: isSuccessNative } =
+    useWaitForTransaction({
+      hash: dataNative?.hash,
+    });
+
+  // wagmi erc20 transaction
+  const { config } = usePrepareContractWrite({
+    address: transactionData?.recipient as `0x${string}` | undefined,
+    abi: ERC20,
+    functionName: "transfer",
+    args: [
+      transactionData?.recipient,
+      BigInt(utils.parseEther(amount).toString()),
+    ],
+  });
+
+  const { data, write } = useContractWrite(config);
+
+  const { isLoading, isSuccess } = useWaitForTransaction({
+    hash: data?.hash,
+  });
 
   const handleAnalysis = async () => {
     setIsAnalysisCompleted(false);
@@ -183,9 +225,13 @@ const IntelligenceAnalysis: React.FC<{
             <button
               className="text-lg font-semibold rounded-md border-2 min-w-min border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
               type="button"
-              onClick={onContinue}
+              onClick={
+                transactionData?.isNativeTx
+                  ? () => sendTransaction?.()
+                  : () => write?.()
+              }
             >
-              {"Continue"}
+              {isLoadingNative ? "Sending..." : "Send Transaction"}
             </button>
           ) : (
             <button
@@ -193,8 +239,19 @@ const IntelligenceAnalysis: React.FC<{
               type="button"
               onClick={handleAnalysis}
             >
-              {"Start"}
+              {"Generate report"}
             </button>
+          )}
+          <br />
+          <br />
+          {isSuccessNative && (
+            <div className="font-semibold text-gray-950 min-w-min w-[500px] mr-8">
+              {`Payment successful! Check your transaction on `}
+
+              <a href={`https://etherscan.io/tx/${dataNative?.hash}`}>
+                {"Etherscan"}
+              </a>
+            </div>
           )}
         </div>
       </div>

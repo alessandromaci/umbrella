@@ -40,7 +40,10 @@ const Page: React.FC = () => {
         <ConnectButton chainStatus="icon" />
       </div>
       <div style={{ display: "flex" }}>
-        <SideMenu onTransactions={() => setPageNumber(11)} />
+        <SideMenu
+          onTransactions={() => setPageNumber(11)}
+          onStart={() => setPageNumber(0)}
+        />
 
         {pageNumber === 0 ? (
           <StartPage

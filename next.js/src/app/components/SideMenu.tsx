@@ -4,8 +4,9 @@ import React from "react";
 import * as Separator from "@radix-ui/react-separator";
 
 const SideMenu: React.FC<{
+  onStart: () => void;
   onTransactions: () => void;
-}> = ({ onTransactions }) => {
+}> = ({ onStart, onTransactions }) => {
   return (
     <div className="max-w-fit min-w-fit p-4 w-[17%] font-noto h-screen justify-start self-center border-r-2 border-gray-400 text-sm flex flex-col ">
       <div className="flex flex-col items-center">
@@ -14,8 +15,12 @@ const SideMenu: React.FC<{
         <button className="text-lg font-semibold rounded-lg p-2 text-gray-00 w-[200px] bg-sky-500 mb-2">
           Connect
         </button>
-        <button className="text-lg font-semibold rounded-lg p-2 text-gray-00 w-[200px] bg-sky-500 mb-16">
-          New Transaction
+        <button
+          type="button"
+          onClick={onStart}
+          className="text-lg font-semibold rounded-lg p-2 text-gray-00 w-[200px] bg-sky-500 mb-16"
+        >
+          {"New Transaction"}
         </button>
         <br />
         <br />
