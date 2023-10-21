@@ -119,131 +119,127 @@ const TestTransaction: React.FC<{
   }, [isSuccess, isSuccessNative]);
 
   return (
-      <div className="max-w-fit min-w-min p-4 rounded-xl items-center justify-between border-2 font-noto border-gray-400 text-sm lg:flex">
-        <div className="w-full min-w-min">
-          <button
-            type="button"
-            onClick={goBack}
-            className="text-blue-600 font-semibold"
-          >
-            {"Back"}
-          </button>
+    <div className="max-w-fit min-w-min p-4 rounded-xl items-center justify-between border-2 font-noto border-gray-400 text-sm lg:flex">
+      <div className="w-full min-w-min">
+        <button
+          type="button"
+          onClick={goBack}
+          className="text-blue-600 font-semibold"
+        >
+          {"Back"}
+        </button>
+        <br />
+        <br />
+        <h1 className="text-3xl font-bold mb-2">
+          {"The address is not verified"}
+        </h1>
+        <p className="font-semibold text-gray-950 min-w-min w-[500px] mr-8">
+          {
+            "Umbrella requires you to send a test transaction on the Goerli Testnet to create a connection. Once the recipient has confirmed this test transaction, they will be added to your address book and you can send verified transactions."
+          }
           <br />
           <br />
-          <h1 className="text-3xl font-bold mb-2">
-            {"The address is not verified"}
-          </h1>
-          <p className="font-semibold text-gray-950 min-w-min w-[500px] mr-8">
-            {
-              "Umbrella requires you to send a test transaction on the Goerli Testnet to create a connection. Once the recipient has confirmed this test transaction, they will be added to your address book and you can send verified transactions."
-            }
-            <br />
-            <br />
-            {
-              "To carry out this test transaction, please make sure you have Goerli ETH."
-            }
-          </p>
-          <br />
-          <button
-            className="text-lg font-bold rounded-md p-2 text-gray-00 w-[150px] hover:bg-sky-400 bg-sky-500 mb-8"
-            onClick={() => window.open("https://goerlifaucet.com/", "_blank")}
-          >
-            {"Get Goerli ETH"}
-          </button>
-          <br />
-          <h1 className="text-xl font-bold mb-2">
-            {"Test transaction details"}
-          </h1>
-          <div className="flex flex-row min-w-min h-fit mb-4 gap-2">
-            <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-100 py-0 px-2">
-              <p className="font-semibold text-gray-950">{"Wallet:"}</p> &nbsp;
-              <p className="text-[14.5px] font-semibold tracking-tighter">
-                {transactionData?.recipient.slice(0, 4)}
-                {"...."}
-                {transactionData?.recipient.slice(-4)}
-              </p>
-            </div>
-            <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-100 py-0 px-2">
-              <p className="font-semibold text-gray-950">{"Asset:"}</p> &nbsp;
-              <p className="text-[14.5px] font-semibold tracking-tighter">
-                {"0.00169 gETH"}
-              </p>
-            </div>
-            <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-100 py-0 px-2">
-              <p className="font-semibold text-gray-950">{"Network:"}</p> &nbsp;
-              <p className="text-[14.5px] font-semibold tracking-tighter">
-                {"goerli"}
-              </p>
-            </div>
+          {
+            "To carry out this test transaction, please make sure you have Goerli ETH."
+          }
+        </p>
+        <br />
+        <button
+          className="text-lg font-bold rounded-md p-2 text-gray-00 w-[150px] hover:bg-sky-400 bg-sky-500 mb-8"
+          onClick={() => window.open("https://goerlifaucet.com/", "_blank")}
+        >
+          {"Get Goerli ETH"}
+        </button>
+        <br />
+        <h1 className="text-xl font-bold mb-2">{"Test transaction details"}</h1>
+        <div className="flex flex-row min-w-min h-fit mb-4 gap-2">
+          <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-100 py-0 px-2">
+            <p className="font-semibold text-gray-950">{"Wallet:"}</p> &nbsp;
+            <p className="text-[14.5px] font-semibold tracking-tighter">
+              {transactionData?.recipient.slice(0, 4)}
+              {"...."}
+              {transactionData?.recipient.slice(-4)}
+            </p>
           </div>
-          <Separator.Root className="bg-violet6 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px my-[15px]" />
-          <h1 className="text-xl font-bold mb-2">
-            {"Full transaction details"}
-          </h1>
-          <div className="flex flex-row min-w-min h-fit mb-12 gap-2">
-            <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-100 py-0 px-2">
-              <p className="font-semibold text-gray-950">{"Wallet:"}</p> &nbsp;
-              <p className="text-[14.5px] font-semibold tracking-tighter">
-                {transactionData?.recipient.slice(0, 4)}
-                {"...."}
-                {transactionData?.recipient.slice(-4)}
-              </p>
-            </div>
-            <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-100 py-0 px-2">
-              <p className="font-semibold text-gray-950">{"Asset:"}</p> &nbsp;
-              <p className="text-[14.5px] font-semibold tracking-tighter">
-                {`${transactionData?.amount} ${transactionData?.token}`}
-              </p>
-            </div>
-            <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-100 py-0 px-2">
-              <p className="font-semibold text-gray-950">{"Network:"}</p> &nbsp;
-              <p className="text-[14.5px] font-semibold tracking-tighter">
-                {transactionData?.chain}
-              </p>
-            </div>
+          <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-100 py-0 px-2">
+            <p className="font-semibold text-gray-950">{"Asset:"}</p> &nbsp;
+            <p className="text-[14.5px] font-semibold tracking-tighter">
+              {"0.00169 gETH"}
+            </p>
           </div>
-          <button
-            className="text-lg font-semibold rounded-lg p-2 min-w-min text-gray-00 w-full hover:bg-sky-400 bg-sky-500 mb-1"
-            type="button"
-            onClick={() => sendTransactionTest?.()}
-          >
-            {isLoadingTest ? "Sending..." : "Send Test Transaction"}
-          </button>
-          {transactionData?.securityLevel == "enhanced" ? (
-            <button
-              className="text-lg font-semibold rounded-lg border-2 min-w-min border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
-              type="button"
-              onClick={onAnalysis}
-            >
-              {"Skip the testing. Run analysis"}
-            </button>
-          ) : (
-            <button
-              className="text-lg font-semibold rounded-lg border-2 min-w-min border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
-              type="button"
-              onClick={
-                transactionData?.isNativeTx
-                  ? () => sendTransaction?.()
-                  : () => write?.()
-              }
-            >
-              {isLoadingNative
-                ? "Sending..."
-                : "I understand, send full transaction anyway"}
-            </button>
-          )}
-
-          {isSuccessNative && (
-            <div className="font-semibold text-gray-950 min-w-min w-[500px] mr-8">
-              {`Payment successful! Check your transaction on `}
-
-              <a href={`https://etherscan.io/tx/${dataNative?.hash}`}>
-                {"Etherscan"}
-              </a>
-            </div>
-          )}
+          <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-100 py-0 px-2">
+            <p className="font-semibold text-gray-950">{"Network:"}</p> &nbsp;
+            <p className="text-[14.5px] font-semibold tracking-tighter">
+              {"goerli"}
+            </p>
+          </div>
         </div>
+        <Separator.Root className="bg-violet6 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px my-[15px]" />
+        <h1 className="text-xl font-bold mb-2">{"Full transaction details"}</h1>
+        <div className="flex flex-row min-w-min h-fit mb-12 gap-2">
+          <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-100 py-0 px-2">
+            <p className="font-semibold text-gray-950">{"Wallet:"}</p> &nbsp;
+            <p className="text-[14.5px] font-semibold tracking-tighter">
+              {transactionData?.recipient.slice(0, 4)}
+              {"...."}
+              {transactionData?.recipient.slice(-4)}
+            </p>
+          </div>
+          <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-100 py-0 px-2">
+            <p className="font-semibold text-gray-950">{"Asset:"}</p> &nbsp;
+            <p className="text-[14.5px] font-semibold tracking-tighter">
+              {`${transactionData?.amount} ${transactionData?.token}`}
+            </p>
+          </div>
+          <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-100 py-0 px-2">
+            <p className="font-semibold text-gray-950">{"Network:"}</p> &nbsp;
+            <p className="text-[14.5px] font-semibold tracking-tighter">
+              {transactionData?.chain}
+            </p>
+          </div>
+        </div>
+        <button
+          className="text-lg font-semibold rounded-lg p-2 min-w-min text-gray-00 w-full hover:bg-sky-400 bg-sky-500 mb-1"
+          type="button"
+          onClick={() => sendTransactionTest?.()}
+        >
+          {isLoadingTest ? "Sending..." : "Send Test Transaction"}
+        </button>
+        {transactionData?.securityLevel == "enhanced" ? (
+          <button
+            className="text-lg font-semibold rounded-lg border-2 min-w-min border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
+            type="button"
+            onClick={onAnalysis}
+          >
+            {"Skip the testing. Run analysiss"}
+          </button>
+        ) : (
+          <button
+            className="text-lg font-semibold rounded-lg border-2 min-w-min border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
+            type="button"
+            onClick={
+              transactionData?.isNativeTx
+                ? () => sendTransaction?.()
+                : () => write?.()
+            }
+          >
+            {isLoadingNative
+              ? "Sending..."
+              : "I understand, send full transaction anyway"}
+          </button>
+        )}
+
+        {isSuccessNative && (
+          <div className="font-semibold text-gray-950 min-w-min w-[500px] mr-8">
+            {`Payment successful! Check your transaction on `}
+
+            <a href={`https://etherscan.io/tx/${dataNative?.hash}`}>
+              {"Etherscan"}
+            </a>
+          </div>
+        )}
       </div>
+    </div>
   );
 };
 
