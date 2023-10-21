@@ -89,6 +89,42 @@ export const sendPaymentNotification = async (
   }
 };
 
+export const sendTestPaymentNotification = async (
+  sender: string | undefined,
+  data: TransactionData | undefined,
+  etherscanLink: string
+) => {
+  try {
+    const now = new Date();
+    const date = formatDate(now);
+    const time = now.toISOString().split("T")[1].split(".")[0];
+
+    const apiResponse = await PushAPI.payloads.sendNotification({
+      signer,
+      type: 3, // target
+      identityType: 2, // direct payload
+      notification: {
+        title: `Test Payment Sent`,
+        body: `${etherscanLink}`,
+      },
+      payload: {
+        title: `Test Payment Sent`,
+        body: `${date} ${time} (UTC): You received a test payment of 0.00169 gETH from ${sender}`,
+        cta: `${etherscanLink}`,
+        img: "",
+      },
+      recipients: `eip155:${environmentInteger}:${data?.recipient}`, // recipient address
+      channel: `eip155:${environmentInteger}:${channelAddress}`,
+      env: environment,
+    });
+
+    // apiResponse?.status === 204, if sent successfully!
+    console.log("API repsonse: ", apiResponse);
+  } catch (err) {
+    console.error("Error: ", err);
+  }
+};
+
 // export const sendNotificationRequest = async (
 //   sender: string | undefined,
 //   networkName: string | undefined,

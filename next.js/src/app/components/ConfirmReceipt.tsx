@@ -40,9 +40,36 @@ const ConfirmReceipt: React.FC<{
             }
             <a href={etherscanLink}>{"Etherscan"}</a>
           </p>
-          <Separator.Root className="bg-violet6 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px my-[15px]" />
+          <br />
+          <br />
           <h1 className="text-xl font-bold mb-2">
             {"Test transaction details"}
+          </h1>
+          <div className="flex flex-row min-w-min h-fit mb-12 gap-2">
+            <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-200 py-0 px-2">
+              <p className="font-semibold text-gray-950">{"Wallet:"}</p> &nbsp;
+              <p className="text-[14.5px] font-semibold tracking-tighter">
+                {transactionData?.recipient.slice(0, 4)}
+                {"...."}
+                {transactionData?.recipient.slice(-4)}
+              </p>
+            </div>
+            <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-200 py-0 px-2">
+              <p className="font-semibold text-gray-950">{"Asset:"}</p> &nbsp;
+              <p className="text-[14.5px] font-semibold tracking-tighter">
+                {"0.00169 gETH"}
+              </p>
+            </div>
+            <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-200 py-0 px-2">
+              <p className="font-semibold text-gray-950">{"Network:"}</p> &nbsp;
+              <p className="text-[14.5px] font-semibold tracking-tighter">
+                {"goerli"}
+              </p>
+            </div>
+          </div>
+          <Separator.Root className="bg-violet6 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px my-[15px]" />
+          <h1 className="text-xl font-bold mb-2">
+            {"Full transaction details"}
           </h1>
           <div className="flex flex-row min-w-min h-fit mb-12 gap-2">
             <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-200 py-0 px-2">
@@ -68,7 +95,9 @@ const ConfirmReceipt: React.FC<{
           </div>
           <h1 className="text-xl font-bold mb-2">{"Status: Pending"}</h1>
           <p className="font-semibold text-gray-950 min-w-min w-[500px] mr-8">
-            {"Did you receive the confirmation from the recipient?"}
+            {
+              "Did you receive the test payment confirmation from the recipient?"
+            }
           </p>
           <br />
           <br />

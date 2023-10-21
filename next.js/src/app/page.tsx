@@ -28,9 +28,13 @@ const Page: React.FC = () => {
   const [etherscanLink, setEtherscanLink] = React.useState<string>("");
 
   return (
+
    <div className="w-full flex">
       <div className="side-menu w-[23%]">
-        <SideMenu onTransactions={() => setPageNumber(11)} />
+        <SideMenu
+          onTransactions={() => setPageNumber(11)}
+          onStart={() => setPageNumber(0)}
+        />
       </div>
       <div className="place-content-center p-6 flex w-full  ">
         {pageNumber === 0 ? (

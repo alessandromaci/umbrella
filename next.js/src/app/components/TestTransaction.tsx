@@ -11,7 +11,10 @@ import {
 import { utils } from "ethers";
 import ERC20 from "../utils/ERC20.abi.json";
 import { setEtherscanBase } from "../utils/constants";
-import { sendPaymentNotification } from "../utils/push";
+import {
+  sendPaymentNotification,
+  sendTestPaymentNotification,
+} from "../utils/push";
 
 interface TransactionData {
   recipient: string;
@@ -87,7 +90,9 @@ const TestTransaction: React.FC<{
 
   React.useEffect(() => {
     if (isSuccessTest) {
-      setEtherscanLink(`https://goerli.etherscan.io/tx/${dataTest?.hash}`);
+      const etherscanLink = `https://goerli.etherscan.io/tx/${dataTest?.hash}`;
+      sendTestPaymentNotification(address, transactionData, etherscanLink);
+      setEtherscanLink(etherscanLink);
       onContinue();
     }
   }, [isSuccessTest]);
@@ -167,7 +172,7 @@ const TestTransaction: React.FC<{
             <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-100 py-0 px-2">
               <p className="font-semibold text-gray-950">{"Network:"}</p> &nbsp;
               <p className="text-[14.5px] font-semibold tracking-tighter">
-                {"Goerli"}
+                {"goerli"}
               </p>
             </div>
           </div>

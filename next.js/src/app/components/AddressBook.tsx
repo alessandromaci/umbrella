@@ -1,8 +1,17 @@
 import React from "react";
 import { Database } from "@tableland/sdk";
 import * as Separator from "@radix-ui/react-separator";
-import { useAccount } from "wagmi";
 import { useSigner } from "../hooks/useSigner";
+import {
+  useWaitForTransaction,
+  usePrepareSendTransaction,
+  useSendTransaction,
+  usePrepareContractWrite,
+  useContractWrite,
+  useAccount,
+} from "wagmi";
+import { utils } from "ethers";
+import ERC20 from "../utils/ERC20.abi.json";
 
 interface TransactionData {
   recipient: string;
@@ -30,14 +39,45 @@ const AddressBook: React.FC<{
   const [recipientName, setRecipientName] = React.useState<string>("");
   const { address } = useAccount();
   const signer = useSigner();
+  const [isAdding, setIsAdding] = React.useState<boolean>(false);
+  const amount = transactionData?.amount ?? "0"; // default to '0'
 
-  const [showConfirmation, setShowConfirmation] =
-    React.useState<boolean>(false);
+  //wagmi native transaction
+  const { config: configNative } = usePrepareSendTransaction({
+    to: transactionData?.recipient,
+    value: transactionData?.amount
+      ? BigInt(utils.parseEther(transactionData?.amount).toString())
+      : undefined,
+  });
+  const { data: dataNative, sendTransaction } =
+    useSendTransaction(configNative);
+
+  const { isLoading: isLoadingNative, isSuccess: isSuccessNative } =
+    useWaitForTransaction({
+      hash: dataNative?.hash,
+    });
+
+  // wagmi erc20 transaction
+  const { config } = usePrepareContractWrite({
+    address: transactionData?.recipient as `0x${string}` | undefined,
+    abi: ERC20,
+    functionName: "transfer",
+    args: [
+      transactionData?.recipient,
+      BigInt(utils.parseEther(amount).toString()),
+    ],
+  });
+
+  const { data, write } = useContractWrite(config);
+
+  const { isLoading, isSuccess } = useWaitForTransaction({
+    hash: data?.hash,
+  });
 
   const handleSaveAddress = async () => {
     const db: Database<Schema> = new Database({ signer });
     const prefix: string = `umbrella_addressBook_80001_7918`;
-    setShowConfirmation(false);
+    setIsAdding(true);
     const { results: resultsFirst } = await db
       .prepare(`SELECT * FROM ${prefix};`)
       .all();
@@ -63,12 +103,11 @@ const AddressBook: React.FC<{
     // Wait for transaction finality
     await insert.txn?.wait();
 
-    setShowConfirmation(true);
+    setIsAdding(false);
 
     // Perform a read query, requesting all rows from the table
     const { results } = await db.prepare(`SELECT * FROM ${prefix};`).all();
     console.log(`results`, results);
-    console.log(results.length);
   };
 
   return (
@@ -116,9 +155,24 @@ const AddressBook: React.FC<{
             type="button"
             onClick={handleSaveAddress}
           >
-            {showConfirmation
-              ? "Contact added"
-              : "Add recipient to address book"}
+            {isAdding ? "Adding contact" : "Add recipient to address book"}
+          </button>
+          <br />
+          <br />
+          <button
+            className="text-lg font-semibold rounded-md border-2 min-w-min border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
+            type="button"
+            onClick={
+              transactionData?.securityLevel == "enhanced"
+                ? onContinue
+                : transactionData?.isNativeTx
+                ? () => sendTransaction?.()
+                : () => write?.()
+            }
+          >
+            {transactionData?.securityLevel == "enhanced"
+              ? "Continue"
+              : "Send Transaction"}
           </button>
         </div>
       </div>
