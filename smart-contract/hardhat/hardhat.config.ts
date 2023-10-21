@@ -38,6 +38,7 @@ const config: HardhatUserConfig = {
   etherscan: {
     apiKey: {
       goerli: process.env.ETHERSCAN_PRIVATE_KEY || "",
+      polygonMumbai: process.env.POLYGONSCAN_PRIVATE_KEY || "",
       scroll_sepolia: process.env.SCROLLSCAN_PRIVATE_KEY || "",
     },
     customChains: [
