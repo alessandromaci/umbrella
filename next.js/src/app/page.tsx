@@ -23,7 +23,7 @@ interface TransactionData {
 }
 
 const Page: React.FC = () => {
-  let [pageNumber, setPageNumber] = React.useState<number>(11);
+  let [pageNumber, setPageNumber] = React.useState<number>(-1);
   const [transactionData, setTransactionData] = React.useState<
     TransactionData | undefined
   >();
