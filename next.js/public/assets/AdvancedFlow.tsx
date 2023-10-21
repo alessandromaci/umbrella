@@ -1,6 +1,6 @@
 import * as React from "react"
 
-function AdvancedFlow(props) {
+function AdvancedFlow(props:any) {
   return (
     <svg
       width={900}
