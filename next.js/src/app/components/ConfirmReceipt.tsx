@@ -57,13 +57,15 @@ const ConfirmReceipt: React.FC<{
             <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-200 py-0 px-2">
               <p className="font-semibold text-gray-950">{"Asset:"}</p> &nbsp;
               <p className="text-[14.5px] font-semibold tracking-tighter">
-                {"0.00169 gETH"}
+                {`0.00169 ${
+                  transactionData?.chain == "maticmum" ? "MATIC" : "ETH"
+                }`}
               </p>
             </div>
             <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-200 py-0 px-2">
               <p className="font-semibold text-gray-950">{"Network:"}</p> &nbsp;
               <p className="text-[14.5px] font-semibold tracking-tighter">
-                {"goerli"}
+                {transactionData?.chain == "maticmum" ? "maticmum" : "goerli"}
               </p>
             </div>
           </div>

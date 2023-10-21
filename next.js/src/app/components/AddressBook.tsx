@@ -40,6 +40,8 @@ const AddressBook: React.FC<{
   const { address } = useAccount();
   const signer = useSigner();
   const [isAdding, setIsAdding] = React.useState<boolean>(false);
+  const [isNewContactAdded, setIsNewContactAdded] =
+    React.useState<boolean>(false);
   const amount = transactionData?.amount ?? "0"; // default to '0'
 
   //wagmi native transaction
@@ -104,6 +106,7 @@ const AddressBook: React.FC<{
     await insert.txn?.wait();
 
     setIsAdding(false);
+    setIsNewContactAdded(true);
 
     // Perform a read query, requesting all rows from the table
     const { results } = await db.prepare(`SELECT * FROM ${prefix};`).all();
@@ -150,27 +153,34 @@ const AddressBook: React.FC<{
           )} */}
           <br />
           <br />
-          <button
-            className="text-lg font-semibold rounded-md border-2 min-w-min border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
-            type="button"
-            onClick={handleSaveAddress}
-          >
-            {isAdding ? "Adding contact" : "Add recipient to address book"}
-          </button>
+          {isNewContactAdded ? (
+            <p>Contact added!</p>
+          ) : (
+            <button
+              className="text-lg font-semibold rounded-md border-2 min-w-min border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
+              type="button"
+              onClick={handleSaveAddress}
+            >
+              {isAdding ? "Adding contact..." : "Add recipient to address book"}
+            </button>
+          )}
+
           <br />
           <br />
           <button
             className="text-lg font-semibold rounded-md border-2 min-w-min border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
             type="button"
             onClick={
-              transactionData?.securityLevel == "enhanced"
+              transactionData?.securityLevel == "enhanced" ||
+              transactionData?.securityLevel == "advanced"
                 ? onContinue
                 : transactionData?.isNativeTx
                 ? () => sendTransaction?.()
                 : () => write?.()
             }
           >
-            {transactionData?.securityLevel == "enhanced"
+            {transactionData?.securityLevel == "enhanced" ||
+            transactionData?.securityLevel == "advanced"
               ? "Continue"
               : "Send Transaction"}
           </button>

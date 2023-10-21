@@ -32,11 +32,10 @@ interface Schema {
 
 const StartPage: React.FC<{
   onContinue: () => void;
-  onContract: () => void;
   setTransactionData: React.Dispatch<
     React.SetStateAction<TransactionData | undefined>
   >;
-}> = ({ onContinue, onContract, setTransactionData }) => {
+}> = ({ onContinue, setTransactionData }) => {
   const [selectedToken, setSelectedToken] = React.useState<{
     label: string;
     decimals: number;
@@ -106,17 +105,13 @@ const StartPage: React.FC<{
       isNativeTx: isNativeTx,
     });
 
-    if (securityLevel == "advanced") {
-      onContract();
-    } else {
-      onContinue();
-    }
+    onContinue();
   };
 
   React.useEffect(() => {
     if (chain) {
       setSelectedToken(tokensDetails[0]);
-      if (chain.network == "matic") {
+      if (chain.network == "matic" || chain.network == "maticmum") {
         setSelectedToken(tokensDetails[1]);
       }
       setChainId(chain.network);
@@ -191,6 +186,8 @@ const StartPage: React.FC<{
             {tokensDetails
               .filter((token) => {
                 if (chainId === "matic") {
+                  return token.label !== "ETH";
+                } else if (chainId === "maticmum") {
                   return token.label !== "ETH";
                 } else {
                   return token.label !== "MATIC";

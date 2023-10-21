@@ -90,10 +90,15 @@ const TestTransaction: React.FC<{
 
   React.useEffect(() => {
     if (isSuccessTest) {
-      const etherscanLink = `https://goerli.etherscan.io/tx/${dataTest?.hash}`;
-      sendTestPaymentNotification(address, transactionData, etherscanLink);
-      setEtherscanLink(etherscanLink);
-      onContinue();
+      if (transactionData) {
+        const etherscanLink = setEtherscanBase(
+          transactionData.chain,
+          dataTest?.hash
+        );
+        sendTestPaymentNotification(address, transactionData, etherscanLink);
+        setEtherscanLink(etherscanLink);
+        onContinue();
+      }
     }
   }, [isSuccessTest]);
 
@@ -135,20 +140,26 @@ const TestTransaction: React.FC<{
         </h1>
         <p className="font-semibold text-gray-950 min-w-min w-[500px] mr-8">
           {
-            "Umbrella requires you to send a test transaction on the Goerli Testnet to create a connection. Once the recipient has confirmed this test transaction, they will be added to your address book and you can send verified transactions."
+            "Umbrella requires you to send a test transaction on Testnet to create a connection. Once the recipient has confirmed this test transaction, they will be added to your address book and you can send verified transactions."
           }
           <br />
           <br />
-          {
-            "To carry out this test transaction, please make sure you have Goerli ETH."
-          }
+          {`To carry out this test transaction, please make sure you have ${
+            transactionData?.chain == "maticmum" ? "Mumbai MATIC" : "Goerli ETH"
+          }`}
         </p>
         <br />
         <button
-          className="text-lg font-bold rounded-md p-2 text-gray-00 w-[150px] hover:bg-sky-400 bg-sky-500 mb-8"
-          onClick={() => window.open("https://goerlifaucet.com/", "_blank")}
+          className="text-lg font-bold rounded-md p-2 text-gray-00 w-[190px] hover:bg-sky-400 bg-sky-500 mb-8"
+          onClick={
+            transactionData?.chain == "maticmum"
+              ? () => window.open("https://mumbaifaucet.com/", "_blank")
+              : () => window.open("https://goerlifaucet.com/", "_blank")
+          }
         >
-          {"Get Goerli ETH"}
+          {`Get ${
+            transactionData?.chain == "maticmum" ? "Mumbai MATIC" : "Goerli ETH"
+          }`}
         </button>
         <br />
         <h1 className="text-xl font-bold mb-2">{"Test transaction details"}</h1>
@@ -164,13 +175,15 @@ const TestTransaction: React.FC<{
           <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-100 py-0 px-2">
             <p className="font-semibold text-gray-950">{"Asset:"}</p> &nbsp;
             <p className="text-[14.5px] font-semibold tracking-tighter">
-              {"0.00169 gETH"}
+              {`0.00169 ${
+                transactionData?.chain == "maticmum" ? "MATIC" : "ETH"
+              }`}
             </p>
           </div>
           <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-100 py-0 px-2">
             <p className="font-semibold text-gray-950">{"Network:"}</p> &nbsp;
             <p className="text-[14.5px] font-semibold tracking-tighter">
-              {"goerli"}
+              {transactionData?.chain == "maticmum" ? "maticmum" : "goerli"}
             </p>
           </div>
         </div>

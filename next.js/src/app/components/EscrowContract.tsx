@@ -1,20 +1,8 @@
 import React from "react";
 import * as Separator from "@radix-ui/react-separator";
-import {
-  useWaitForTransaction,
-  usePrepareSendTransaction,
-  useSendTransaction,
-  usePrepareContractWrite,
-  useContractWrite,
-  useAccount,
-} from "wagmi";
+import { useWaitForTransaction, useContractWrite, useAccount } from "wagmi";
 import { utils } from "ethers";
-import ERC20 from "../utils/ERC20.abi.json";
 import EscrowContractABI from "../utils/EscrowContract.abi.json";
-
-import { setEtherscanBase } from "../utils/constants";
-import { sendPaymentNotification } from "../utils/push";
-//import { uploadIpfs } from "../utils/ipfs";
 
 interface TransactionData {
   recipient: string;
@@ -29,9 +17,9 @@ interface TransactionData {
 
 const EscrowContract: React.FC<{
   goBack: () => void;
-  onContinue: () => void;
   transactionData: TransactionData | undefined;
-}> = ({ goBack, onContinue, transactionData }) => {
+  etherscanLink: string;
+}> = ({ goBack, transactionData, etherscanLink }) => {
   const amount = transactionData?.amount ?? "0"; // default to '0'
   const [name, setName] = React.useState<string>("");
   const [terms, setTerms] = React.useState<string>("");
@@ -40,40 +28,12 @@ const EscrowContract: React.FC<{
 
   const { address } = useAccount();
 
-  //wagmi native transaction
-  const { config: configNative } = usePrepareSendTransaction({
-    to: transactionData?.recipient,
-    value: transactionData?.amount
-      ? BigInt(utils.parseEther(transactionData?.amount).toString())
-      : undefined,
-  });
-  const { data: dataNative, sendTransaction } =
-    useSendTransaction(configNative);
-
-  const { isLoading: isLoadingNative, isSuccess: isSuccessNative } =
-    useWaitForTransaction({
-      hash: dataNative?.hash,
-    });
-
-  // wagmi erc20 transaction
-  const { config } = usePrepareContractWrite({
-    address: transactionData?.recipient as `0x${string}` | undefined,
-    abi: ERC20,
-    functionName: "transfer",
-    args: [
-      transactionData?.recipient,
-      BigInt(utils.parseEther(amount).toString()),
-    ],
-  });
-
-  const { data, write } = useContractWrite(config);
-
-  const { isLoading, isSuccess } = useWaitForTransaction({
-    hash: data?.hash,
-  });
-
-  //create contract agreement (mumbai)
-  const { config: createAgreement } = usePrepareContractWrite({
+  // ----create agreement function mumbai----
+  const {
+    data: dataCreateAgreement,
+    write: writeCreateAgreement,
+    error,
+  } = useContractWrite({
     address: "0xf0b1c1b99f2d9c94a57ec2da45915cf1fd3e47a7",
     abi: EscrowContractABI,
     functionName: "createAgreement",
@@ -81,19 +41,36 @@ const EscrowContract: React.FC<{
       address,
       transactionData?.recipient,
       BigInt(utils.parseEther(amount).toString()),
-      transactionData?.tokenAddress,
+      "0x0000000000000000000000000000000000000001",
       evidence,
     ],
+    value: BigInt(utils.parseEther(amount).toString()),
   });
-
-  const { data: dataCreateAgreement, write: writeCreateAgreement } =
-    useContractWrite(createAgreement);
 
   const {
     isLoading: isLoadingCreateAgreement,
     isSuccess: isSuccessCreateAgreement,
   } = useWaitForTransaction({
     hash: dataCreateAgreement?.hash,
+  });
+
+  // ----confirms agreement completed function mumbai----
+  const {
+    data: dataConfirmReceived,
+    write: confirmReceived,
+    error: errorConfirmReceived,
+  } = useContractWrite({
+    address: "0xf0b1c1b99f2d9c94a57ec2da45915cf1fd3e47a7",
+    abi: EscrowContractABI,
+    functionName: "confirmReceived",
+    args: [1],
+  });
+
+  const {
+    isLoading: isLoadingConfirmReceived,
+    isSuccess: isSuccessConfirmReceived,
+  } = useWaitForTransaction({
+    hash: dataConfirmReceived?.hash,
   });
 
   const createAgreementRequest = async () => {
@@ -105,6 +82,7 @@ const EscrowContract: React.FC<{
       value: amount,
       tokenAddress: transactionData?.tokenAddress,
     };
+    // You can replace `any` with your data's type
     try {
       const response = await fetch("/api/pinToPinata", {
         method: "POST",
@@ -119,6 +97,7 @@ const EscrowContract: React.FC<{
       }
 
       const result = await response.json();
+      setEvidence(result);
       console.log("Pinned data:", result);
       setIpfsLoading(false);
     } catch (error) {
@@ -193,45 +172,102 @@ const EscrowContract: React.FC<{
           </div>
         </div>
         <h1 className="text-lg font-bold mb-2">{"Contract details"}</h1>
-        <p className="text-base font-medium leading-[35px] text-black">
-          {"Name of Contract"}
-        </p>
-        <input
-          className="grow shrink-0 w-full rounded px-2.5 text-[15px] leading-none text-sky-600 shadow-[0_0_0_1px] shadow-sky-500 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-600 mb-4 outline-none"
-          id="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Name of Contract"
-        />
-        <p className="text-base font-medium leading-[35px] text-black">
-          {"Contract Terms"}
-        </p>
-        <input
-          className="grow shrink-0 w-full rounded px-2.5 text-[15px] leading-none text-sky-600 shadow-[0_0_0_1px] shadow-sky-500 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-600 mb-4 outline-none"
-          id="terms"
-          value={terms}
-          onChange={(e) => setTerms(e.target.value)}
-          placeholder="I expect to..."
-        />
-        <div className="h-fit flex flex-row rounded-2xl gap-4 py-0 mb-4">
-          <button className="text-md font-semibold rounded-lg h-fit border min-w-min p-2 border-sky-500 text-gray-00 w-[35%] hover:bg-sky-400 bg-sky-500 mb-1">
-            {"Use Template"}
-          </button>
-          {/* <button className="text-md font-semibold rounded-lg h-fit border min-w-min border-sky-500 p-2 bg-gray-00 w-[35%] hover:text-sky-400 hover:border-sky-400 text-sky-500 mb-1">
+
+        {isSuccessCreateAgreement ? (
+          <p>
+            {"Contract name: "}
+            {name}
+          </p>
+        ) : (
+          <>
+            <p className="text-base font-medium leading-[35px] text-black">
+              {"Name of Contract"}
+            </p>
+
+            <input
+              className="grow shrink-0 w-full rounded px-2.5 text-[15px] leading-none text-sky-600 shadow-[0_0_0_1px] shadow-sky-500 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-600 mb-4 outline-none"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Name of Contract"
+            />
+          </>
+        )}
+
+        {isSuccessCreateAgreement ? (
+          <p>
+            {"Contract terms:"} {evidence.IpfsHash}
+          </p>
+        ) : (
+          <>
+            <p className="text-base font-medium leading-[35px] text-black">
+              {"Contract Terms"}
+            </p>
+            <input
+              className="grow shrink-0 w-full rounded px-2.5 text-[15px] leading-none text-sky-600 shadow-[0_0_0_1px] shadow-sky-500 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-600 mb-4 outline-none"
+              id="terms"
+              value={terms}
+              onChange={(e) => setTerms(e.target.value)}
+              placeholder="I expect to..."
+            />
+          </>
+        )}
+        {!isSuccessCreateAgreement && (
+          <div className="h-fit flex flex-row rounded-2xl gap-4 py-0 mb-4">
+            <button className="text-md font-semibold rounded-lg h-fit border min-w-min p-2 border-sky-500 text-gray-00 w-[35%] hover:bg-sky-400 bg-sky-500 mb-1">
+              {"Use Template"}
+            </button>
+            {/* <button className="text-md font-semibold rounded-lg h-fit border min-w-min border-sky-500 p-2 bg-gray-00 w-[35%] hover:text-sky-400 hover:border-sky-400 text-sky-500 mb-1">
             {"Create New"}
           </button> */}
-        </div>
+          </div>
+        )}
 
-        <button
-          className="text-lg font-semibold rounded-lg p-2 min-w-min text-gray-00 w-full hover:bg-sky-400 bg-sky-500 mb-1"
-          type="button"
-          onClick={() => {
-            createAgreementRequest();
-          }}
-        >
-          {/* writeCreateAgreement?.();  */}
-          {"Send Contract"}
-        </button>
+        {isSuccessCreateAgreement ? (
+          <>
+            <button
+              className="text-lg font-semibold rounded-lg p-2 min-w-min text-gray-00 w-full hover:bg-sky-400 bg-sky-500 mb-1"
+              type="button"
+              onClick={() => {
+                confirmReceived?.();
+              }}
+            >
+              {isLoadingConfirmReceived ? "Confirming..." : "Confirm receipt"}
+            </button>
+            <button
+              className="text-lg font-semibold rounded-lg p-2 min-w-min text-gray-00 w-full hover:bg-sky-400 bg-sky-500 mb-1"
+              type="button"
+              onClick={() => {
+                console.log("judge called");
+              }}
+            >
+              {"I didn't receive it. Call judge"}
+            </button>
+            {isSuccessConfirmReceived && (
+              <>
+                {" "}
+                <p>{`Contract confirmed. Money sent to the recipient! Check`}</p>{" "}
+                <a href={etherscanLink}>{"Etherscan"}</a>
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            <button
+              className="text-lg font-semibold rounded-lg p-2 min-w-min text-gray-00 w-full hover:bg-sky-400 bg-sky-500 mb-1"
+              type="button"
+              onClick={() => {
+                createAgreementRequest();
+                writeCreateAgreement?.();
+                console.log(error);
+              }}
+            >
+              {isLoadingCreateAgreement ? "Sending..." : "Send Contract"}
+            </button>
+            {isSuccessCreateAgreement && <p>{"Contract created!"}</p>}
+            {error && <p>{"An error occurred preparing the transaction"}</p>}
+          </>
+        )}
       </div>
     </div>
   );

@@ -40,7 +40,6 @@ const Page: React.FC = () => {
         {pageNumber === 0 ? (
           <StartPage
             onContinue={() => setPageNumber(1)}
-            onContract={() => setPageNumber(5)}
             setTransactionData={setTransactionData}
           />
         ) : pageNumber === 1 ? (
@@ -73,8 +72,8 @@ const Page: React.FC = () => {
         ) : pageNumber === 5 ? (
           <EscrowContract
             goBack={() => setPageNumber(0)}
-            onContinue={() => setPageNumber(6)}
             transactionData={transactionData}
+            etherscanLink={etherscanLink}
           />
         ) : pageNumber === 11 ? (
           <Notifications goBack={() => setPageNumber(0)} />

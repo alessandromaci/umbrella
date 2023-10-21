@@ -141,6 +141,10 @@ const IntelligenceAnalysis: React.FC<{
     const averageTimeInterval =
       timeIntervals.reduce((a, b) => a + b, 0) / timeIntervals.length;
 
+    const MILLISECONDS_IN_A_DAY = 24 * 60 * 60 * 1000;
+    const averageTimeIntervalInDays =
+      averageTimeInterval / MILLISECONDS_IN_A_DAY;
+
     // A consistently high gas price might indicate the recipient is willing to pay more to expedite their transactions, which could be seen as suspicious.
     const highGasPrices = history.filter(
       (tx) => parseFloat(utils.formatEther(tx.gasPrice)) > 100
@@ -154,7 +158,8 @@ const IntelligenceAnalysis: React.FC<{
     return {
       "number of transactions found": numberOfTransactions,
       "average transaction value (ETH)": averageTransactionValue,
-      "average time interval between transactions (ms)": averageTimeInterval,
+      "average time interval between transactions (days)":
+        averageTimeIntervalInDays,
       "number of transactions with gas price > 100 Gwei": highGasPrices,
       "number of contract interactions": contractInteractions,
     };
@@ -222,17 +227,27 @@ const IntelligenceAnalysis: React.FC<{
 
           <br />
           {isAnalysisCompleted ? (
-            <button
-              className="text-lg font-semibold rounded-md border-2 min-w-min border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
-              type="button"
-              onClick={
-                transactionData?.isNativeTx
-                  ? () => sendTransaction?.()
-                  : () => write?.()
-              }
-            >
-              {isLoadingNative ? "Sending..." : "Send Transaction"}
-            </button>
+            transactionData?.securityLevel == "advanced" ? (
+              <button
+                className="text-lg font-semibold rounded-md border-2 min-w-min border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
+                type="button"
+                onClick={onContinue}
+              >
+                {"Continue"}
+              </button>
+            ) : (
+              <button
+                className="text-lg font-semibold rounded-md border-2 min-w-min border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
+                type="button"
+                onClick={
+                  transactionData?.isNativeTx
+                    ? () => sendTransaction?.()
+                    : () => write?.()
+                }
+              >
+                {isLoadingNative ? "Sending..." : "Send Transaction"}
+              </button>
+            )
           ) : (
             <button
               className="text-lg font-semibold rounded-md border-2 min-w-min border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
