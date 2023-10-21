@@ -97,21 +97,32 @@ const EscrowContract: React.FC<{
   });
 
   const createAgreementRequest = async () => {
+    setIpfsLoading(true);
+    const data = {
+      contractName: name,
+      contractTerms: terms,
+      from: address,
+      value: amount,
+      tokenAddress: transactionData?.tokenAddress,
+    };
     try {
-      setIpfsLoading(true);
-      const data = {
-        contractName: name,
-        contractTerms: terms,
-        from: address,
-        value: amount,
-        tokenAddress: transactionData?.tokenAddress,
-      };
-      //   const { path } = await uploadIpfs(data).finally(() => {
-      //     setIpfsLoading(false);
-      //   });
-      //setEvidence(path);
+      const response = await fetch("/api/pinToPinata", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const result = await response.json();
+      console.log("Pinned data:", result);
+      setIpfsLoading(false);
     } catch (error) {
-      console.error(error);
+      console.error("Error pinning data to Pinata:", error);
       setIpfsLoading(false);
     }
   };
