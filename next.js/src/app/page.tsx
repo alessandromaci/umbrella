@@ -8,6 +8,7 @@ import AddressBook from "./components/AddressBook";
 import SideMenu from "./components/SideMenu";
 import Notifications from "./components/Notifications";
 import IntelligenceAnalysis from "./components/IntelligenceAnalysis";
+import EscrowContract from "./components/EscrowContract";
 
 interface TransactionData {
   recipient: string;
@@ -28,8 +29,7 @@ const Page: React.FC = () => {
   const [etherscanLink, setEtherscanLink] = React.useState<string>("");
 
   return (
-
-   <div className="w-full flex">
+    <div className="w-full flex">
       <div className="side-menu w-[23%]">
         <SideMenu
           onTransactions={() => setPageNumber(11)}
@@ -40,6 +40,7 @@ const Page: React.FC = () => {
         {pageNumber === 0 ? (
           <StartPage
             onContinue={() => setPageNumber(1)}
+            onContract={() => setPageNumber(5)}
             setTransactionData={setTransactionData}
           />
         ) : pageNumber === 1 ? (
@@ -68,6 +69,13 @@ const Page: React.FC = () => {
             goBack={() => setPageNumber(0)}
             onContinue={() => setPageNumber(5)}
             transactionData={transactionData}
+          />
+        ) : pageNumber === 5 ? (
+          <EscrowContract
+            goBack={() => setPageNumber(0)}
+            onContinue={() => setPageNumber(6)}
+            transactionData={transactionData}
+            setEtherscanLink={setEtherscanLink}
           />
         ) : pageNumber === 11 ? (
           <Notifications goBack={() => setPageNumber(0)} />
