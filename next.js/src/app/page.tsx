@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import StartPage from "./components/StartPage";
 import TestTransaction from "./components/TestTransaction";
 import ConfirmReceipt from "./components/ConfirmReceipt";
@@ -29,22 +28,15 @@ const Page: React.FC = () => {
   const [etherscanLink, setEtherscanLink] = React.useState<string>("");
 
   return (
-    <>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          padding: 5,
-        }}
-      >
-        <ConnectButton chainStatus="icon" />
-      </div>
-      <div style={{ display: "flex" }}>
+
+   <div className="w-full flex">
+      <div className="side-menu w-[23%]">
         <SideMenu
           onTransactions={() => setPageNumber(11)}
           onStart={() => setPageNumber(0)}
         />
-
+      </div>
+      <div className="place-content-center p-6 flex w-full  ">
         {pageNumber === 0 ? (
           <StartPage
             onContinue={() => setPageNumber(1)}
@@ -83,7 +75,7 @@ const Page: React.FC = () => {
           <></>
         )}
       </div>
-    </>
+    </div>
   );
 };
 
