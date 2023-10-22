@@ -124,7 +124,34 @@ export default function HomePage() {
           </button>
         </div>
         <p className="font-medium">
-          Made with ❤️ by<a href=""> Alerex, Julo & Mihir</a>
+          Made with ❤️ by{" "}
+          <a
+            className="font-semibold hover:underline underline-offset-4"
+            target="_blank"
+            rel="noreferrer"
+            href={"https://twitter.com/alerex_eth"}
+          >
+            {" "}
+            Alerex,
+          </a>
+          <a
+            className="font-semibold hover:underline underline-offset-4"
+            target="_blank"
+            rel="noreferrer"
+            href={"https://twitter.com/0xJulo"}
+          >
+            {" "}
+            Julo
+          </a>{" "}
+          &{" "}
+          <a
+            className="font-semibold hover:underline underline-offset-4"
+            target="_blank"
+            rel="noreferrer"
+            href={"https://twitter.com/0xMartian69"}
+          >
+            Mihir
+          </a>
         </p>
       </section>
     </div>
