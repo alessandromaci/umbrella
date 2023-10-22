@@ -1,6 +1,6 @@
-import * as React from "react"
+import * as React from "react";
 
-function BasicFlow(props:any) {
+function BasicFlow(props: any) {
   return (
     <svg
       width={900}
@@ -33,7 +33,7 @@ function BasicFlow(props:any) {
       <mask
         id="a"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={44}
@@ -60,7 +60,7 @@ function BasicFlow(props:any) {
       <mask
         id="b"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={505}
@@ -87,7 +87,7 @@ function BasicFlow(props:any) {
       <mask
         id="c"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={966}
@@ -114,7 +114,7 @@ function BasicFlow(props:any) {
       <mask
         id="d"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={264}
@@ -133,7 +133,7 @@ function BasicFlow(props:any) {
       <mask
         id="e"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={343}
@@ -164,7 +164,7 @@ function BasicFlow(props:any) {
       <mask
         id="f"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={264}
@@ -183,7 +183,7 @@ function BasicFlow(props:any) {
       <mask
         id="g"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={333}
@@ -214,7 +214,7 @@ function BasicFlow(props:any) {
       <mask
         id="h"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={740}
@@ -233,7 +233,7 @@ function BasicFlow(props:any) {
       <mask
         id="i"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={802}
@@ -264,7 +264,7 @@ function BasicFlow(props:any) {
       <mask
         id="j"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={499}
@@ -281,7 +281,7 @@ function BasicFlow(props:any) {
         />
       </g>
     </svg>
-  )
+  );
 }
 
-export default BasicFlow
+export default BasicFlow;

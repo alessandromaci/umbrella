@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import BasicFlow from "../../../public/assets/BasicFlow";
 import EnhancedFlow from "../../../public/assets/EnhancedFlow";
 import AdvancedFlow from "../../../public/assets/AdvancedFlow";
@@ -105,10 +105,27 @@ export default function HomePage() {
       </section>
       <section className="w-full p-4 items-center justify-between bg-zinc-900 text-sm flex flex-col">
         <div className="w-full p-16 min-w-min flex flex-row gap-8 justify-center">
-          <button href='#'><DiscordSVG className="hover:fill-white"/></button>
-          <button href='#'><GithubSVG className="hover:fill-white" /></button>
+          <button
+            type="button"
+            onClick={() =>
+              window.open(
+                "https://github.com/alessandromaci/umbrella",
+                "_blank"
+              )
+            }
+          >
+            <DiscordSVG className="hover:fill-white" />
+          </button>
+          <button
+            type="button"
+            onClick={() => window.open("https://discord.gg/vHCSnu9s", "_blank")}
+          >
+            <GithubSVG className="hover:fill-white" />
+          </button>
         </div>
-        <p className='font-medium'>Made with ❤️ by<a href=''> Alerex, Julo & Mihir</a></p>
+        <p className="font-medium">
+          Made with ❤️ by<a href=""> Alerex, Julo & Mihir</a>
+        </p>
       </section>
     </div>
   );

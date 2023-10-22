@@ -1,6 +1,6 @@
-import * as React from "react"
+import * as React from "react";
 
-function EnhancedFlow(props:any) {
+function EnhancedFlow(props: any) {
   return (
     <svg
       width={900}
@@ -197,7 +197,7 @@ function EnhancedFlow(props:any) {
       <mask
         id="mask0_126_241"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={50}
@@ -227,7 +227,7 @@ function EnhancedFlow(props:any) {
       <mask
         id="mask1_126_241"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={1092}
@@ -257,7 +257,7 @@ function EnhancedFlow(props:any) {
       <mask
         id="mask2_126_241"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={551}
@@ -279,7 +279,7 @@ function EnhancedFlow(props:any) {
       <mask
         id="mask3_126_241"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={629}
@@ -374,7 +374,7 @@ function EnhancedFlow(props:any) {
       <mask
         id="mask4_126_241"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={828}
@@ -396,7 +396,7 @@ function EnhancedFlow(props:any) {
       <mask
         id="mask5_126_241"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={905}
@@ -420,7 +420,7 @@ function EnhancedFlow(props:any) {
         fill="white"
       />
     </svg>
-  )
+  );
 }
 
-export default EnhancedFlow
+export default EnhancedFlow;

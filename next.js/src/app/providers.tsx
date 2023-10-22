@@ -8,31 +8,15 @@ import {
 } from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import {
-  mainnet,
   goerli,
-  polygon,
   polygonMumbai,
-  optimism,
-  arbitrum,
   scrollSepolia,
   scrollTestnet,
 } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [
-    mainnet,
-    goerli,
-    polygon,
-    polygonMumbai,
-    optimism,
-    arbitrum,
-    scrollSepolia,
-    scrollTestnet,
-    // ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true"
-    //   ? [goerli, polygonMumbai]
-    //   : []),
-  ],
+  [goerli, polygonMumbai, scrollSepolia, scrollTestnet],
   [publicProvider()]
 );
 

@@ -172,7 +172,7 @@ const StartPage: React.FC<{
           />
           <select
             defaultValue="ETH"
-            className="h-[35px] px-[10px] rounded-r  leading-none text-[15px] bg-zinc-900 shadow-[0_0_0_1px] shadow-sky-400 focus:shadow-[0_0_0_2px] focus:shadow-sky-500  outline-none"
+            className="h-[35px] px-[10px] rounded-r leading-none text-[15px] bg-zinc-900 shadow-[0_0_0_1px] shadow-sky-400 focus:shadow-[0_0_0_2px] focus:shadow-sky-500  outline-none"
             onChange={(e) => {
               const selectedValue = e.target.value;
               const selectedToken = tokensDetails.find(
@@ -236,7 +236,7 @@ const StartPage: React.FC<{
             >
               <fieldset className="mb-2 w-full flex flex-col justify-start">
                 <input
-                  className="grow bg-zinc-900 shrink-0 w-full rounded px-2.5 text-[15px] leading-none text-gray-200 shadow-[0_0_0_1px] shadow-sky-400 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-500 outline-none"
+                  className="grow bg-zinc-900 shrink-0 w-[538px] rounded px-2.5 text-[15px] leading-none text-gray-200 shadow-[0_0_0_1px] shadow-sky-400 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-500 outline-none"
                   id="address"
                   placeholder="0x..."
                   onChange={(e) => {

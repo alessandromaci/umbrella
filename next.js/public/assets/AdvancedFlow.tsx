@@ -1,6 +1,6 @@
-import * as React from "react"
+import * as React from "react";
 
-function AdvancedFlow(props:any) {
+function AdvancedFlow(props: any) {
   return (
     <svg
       width={900}
@@ -679,7 +679,7 @@ function AdvancedFlow(props:any) {
       <mask
         id="mask0_126_345"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={42}
@@ -709,7 +709,7 @@ function AdvancedFlow(props:any) {
       <mask
         id="mask1_126_345"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={594}
@@ -739,7 +739,7 @@ function AdvancedFlow(props:any) {
       <mask
         id="mask2_126_345"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={782}
@@ -769,7 +769,7 @@ function AdvancedFlow(props:any) {
       <mask
         id="mask3_126_345"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={780}
@@ -807,7 +807,7 @@ function AdvancedFlow(props:any) {
       <mask
         id="mask4_126_345"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={1151}
@@ -937,7 +937,7 @@ function AdvancedFlow(props:any) {
       <mask
         id="mask5_126_345"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={405}
@@ -967,7 +967,7 @@ function AdvancedFlow(props:any) {
       <mask
         id="mask6_126_345"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={595}
@@ -997,7 +997,7 @@ function AdvancedFlow(props:any) {
       <mask
         id="mask7_126_345"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={970}
@@ -1019,7 +1019,7 @@ function AdvancedFlow(props:any) {
       <mask
         id="mask8_126_345"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={843}
@@ -1045,7 +1045,7 @@ function AdvancedFlow(props:any) {
       <mask
         id="mask9_126_345"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={843}
@@ -1071,7 +1071,7 @@ function AdvancedFlow(props:any) {
       <mask
         id="mask10_126_345"
         style={{
-          maskType: "luminance"
+          maskType: "luminance",
         }}
         maskUnits="userSpaceOnUse"
         x={975}
@@ -1091,7 +1091,7 @@ function AdvancedFlow(props:any) {
         />
       </g>
     </svg>
-  )
+  );
 }
 
-export default AdvancedFlow
+export default AdvancedFlow;
