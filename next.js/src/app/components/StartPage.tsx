@@ -145,20 +145,20 @@ const StartPage: React.FC<{
   }, [address]);
 
   return (
-    <div className="max-w-fit w-full max-h-90 p-4 rounded-xl items-center justify-between border-2 font-noto text-sm lg:flex">
+    <div className="max-w-fit text-white w-full max-h-90 p-4 rounded-xl items-center justify-between border-2 font-noto text-sm lg:flex">
       <div>
         <h1 className="text-3xl ml-5 mt-3 font-bold mb-2">New Transaction</h1>
         <br />
         <div className="center">
           <Label.Root
-            className="text-lg font-semibold mt-6 ml-5 leading-[35px] text-black"
+            className="text-lg font-semibold mt-6 ml-5 leading-[35px]"
             htmlFor="amount"
           >
             {" Enter amount & asset"}
           </Label.Root>
           <br />
           <input
-            className=" inline-flex ml-5 h-[35px] w-[450px] appearance-none items-center justify-center rounded-[4px] rounded-r-none px-[10px] text-[15px]  leading-none text-black shadow-[0_0_0_1px] shadow-sky-400 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-500 text-black  outline-none  border-r-0"
+            className=" inline-flex ml-5 h-[35px] w-[450px] appearance-none items-center justify-center rounded-[4px] rounded-r-none px-[10px] text-[15px]  leading-none shadow-[0_0_0_1px] bg-zinc-900 shadow-sky-400  focus:shadow-[0_0_0_2px] focus:shadow-sky-500  outline-none  border-r-0"
             type="number"
             id="amount"
             placeholder="0.05"
@@ -172,7 +172,7 @@ const StartPage: React.FC<{
           />
           <select
             defaultValue="ETH"
-            className="h-[35px] px-[10px] rounded-r  leading-none text-[15px]  leading-none text-black shadow-[0_0_0_1px] shadow-sky-400 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-500 text-black  outline-none"
+            className="h-[35px] px-[10px] rounded-r  leading-none text-[15px] bg-zinc-900 shadow-[0_0_0_1px] shadow-sky-400 focus:shadow-[0_0_0_2px] focus:shadow-sky-500  outline-none"
             onChange={(e) => {
               const selectedValue = e.target.value;
               const selectedToken = tokensDetails.find(
@@ -209,7 +209,7 @@ const StartPage: React.FC<{
         </div>
         <br />
         <Label.Root
-          className="text-lg font-semibold mt-6 leading-[35px] text-black"
+          className="text-lg font-semibold mt-6 leading-[35px]"
           htmlFor="address"
         >
           <Tabs.Root className="flex flex-col w-full" defaultValue="newAddress">
@@ -218,25 +218,25 @@ const StartPage: React.FC<{
               aria-label="Manage your account"
             >
               <Tabs.Trigger
-                className="bg-white px-5 h-[45px] flex-1 flex items-center justify-center text-[15px] leading-none text-black select-none first:rounded-tl-md last:rounded-tr-md hover:text-sky-500 data-[state=active]:text-black data-[state=active]:shadow-sky-500 data-[state=active]:shadow-[inset_0_-1px_0_0,0_1px_0_0] data-[state=active]:shadow-current data-[state=active]:focus:relative outline-none cursor-default"
+                className="bg-zinc-900 text-gray-400 px-5 h-[45px] flex-1 flex items-center justify-center text-[15px] leading-none select-none first:rounded-tl-md last:rounded-tr-md hover:text-sky-500 data-[state=active]:text-white data-[state=active]:shadow-sky-500 data-[state=active]:shadow-[inset_0_-1px_0_0,0_1px_0_0] data-[state=active]:focus:relative outline-none cursor-default"
                 value="newAddress"
               >
                 {"New Address"}
               </Tabs.Trigger>
               <Tabs.Trigger
-                className="bg-white px-5 h-[45px] flex-1 flex items-center justify-center text-[15px] leading-none text-black select-none first:rounded-tl-md last:rounded-tr-md hover:text-sky-500 data-[state=active]:text-black data-[state=active]:shadow-sky-500 data-[state=active]:shadow-[inset_0_-1px_0_0,0_1px_0_0] data-[state=active]:shadow-current data-[state=active]:focus:relative outline-none cursor-default"
+                className="bg-zinc-900 text-gray-400 px-5 h-[45px] flex-1 flex items-center justify-center text-[15px] leading-none select-none first:rounded-tl-md last:rounded-tr-md hover:text-sky-500 data-[state=active]:text-white data-[state=active]:shadow-sky-500 data-[state=active]:shadow-[inset_0_-1px_0_0,0_1px_0_0] data-[state=active]:focus:relative outline-none cursor-default"
                 value="addressBook"
               >
                 {"Address Book"}
               </Tabs.Trigger>
             </Tabs.List>
             <Tabs.Content
-              className="grow p-5 bg-white rounded-b-md outline-none "
+              className="grow p-5 bg-zinc-900 rounded-b-md outline-none "
               value="newAddress"
             >
               <fieldset className="mb-2 w-full flex flex-col justify-start">
                 <input
-                  className="grow shrink-0 w-full rounded px-2.5 text-[15px] leading-none text-sky-600 shadow-[0_0_0_1px] shadow-sky-400 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-500 outline-none"
+                  className="grow bg-zinc-900 shrink-0 w-full rounded px-2.5 text-[15px] leading-none text-gray-200 shadow-[0_0_0_1px] shadow-sky-400 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-500 outline-none"
                   id="address"
                   placeholder="0x..."
                   onChange={(e) => {
@@ -247,7 +247,7 @@ const StartPage: React.FC<{
               </fieldset>
             </Tabs.Content>
             <Tabs.Content
-              className="grow p-5 bg-white rounded-b-md outline-none"
+              className="grow p-5 bg-zinc-900 rounded-b-md outline-none"
               value="addressBook"
             >
               <fieldset className="mb-2 w-full flex flex-col justify-start">
@@ -256,7 +256,7 @@ const StartPage: React.FC<{
                   onChange={(e) => {
                     setRecipient(e.target.value);
                   }}
-                  className="grow shrink-0 rounded px-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] shadow-sky-400 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-500 outline-none"
+                  className="grow shrink-0 bg-zinc-900 text-gray-200 rounded px-2.5 text-[15px] leading-none shadow-[0_0_0_1px] shadow-sky-400 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-500 outline-none"
                 >
                   <option key={address} value={address}>
                     {`-- select verified address --`}
@@ -294,7 +294,7 @@ const StartPage: React.FC<{
                 <RadioGroup.Indicator className="flex items-center justify-center w-full h-full relative after:content-[''] after:block after:w-[10px] after:h-[10px] after:rounded-[50%] after:bg-sky-500" />
               </RadioGroup.Item>
               <label
-                className="text-black text-[15px] leading-none pl-[15px]"
+                className="text-[15px] leading-none pl-[15px]"
                 htmlFor="r1"
               >
                 {"Basic Security"}
@@ -316,7 +316,7 @@ const StartPage: React.FC<{
                 <RadioGroup.Indicator className="flex items-center justify-center w-full h-full relative after:content-[''] after:block after:w-[10px] after:h-[10px] after:rounded-[50%] after:bg-sky-500" />
               </RadioGroup.Item>
               <label
-                className="text-black text-[15px] leading-none pl-[15px]"
+                className="text-[15px] leading-none pl-[15px]"
                 htmlFor="r2"
               >
                 {"Enhanced Security"}
@@ -338,7 +338,7 @@ const StartPage: React.FC<{
                 <RadioGroup.Indicator className="flex items-center justify-center w-full h-full relative after:content-[''] after:block after:w-[10px] after:h-[10px] after:rounded-[50%] after:bg-sky-500" />
               </RadioGroup.Item>
               <label
-                className="text-black text-[15px] leading-none pl-[15px]"
+                className="text-[15px] leading-none pl-[15px]"
                 htmlFor="r3"
               >
                 {"Advanced Security"}

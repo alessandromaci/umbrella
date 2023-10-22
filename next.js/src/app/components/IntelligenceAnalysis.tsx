@@ -166,7 +166,7 @@ const IntelligenceAnalysis: React.FC<{
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center min-w-min justify-between p-24">
+    <main className="flex text-white min-h-screen flex-col items-center min-w-min justify-between p-24">
       <div className="max-w-fit min-w-min p-4 rounded-xl items-center justify-between border-2 font-noto border-gray-400 text-sm lg:flex">
         <div className="w-full min-w-min">
           <button
@@ -179,44 +179,44 @@ const IntelligenceAnalysis: React.FC<{
           <br />
           <br />
           <h1 className="text-3xl font-bold mb-2">{"Intelligence Analysis"}</h1>
-          <p className="font-semibold text-gray-950 min-w-min w-[500px] mr-8">
+          <p className="font-semibold text-gray-200 min-w-min w-[500px] mr-8">
             {
               "Umbrella requires you to run an analyis of the recipient address to verify that there are no suspicious activity"
             }
           </p>
-          <Separator.Root className="bg-violet6 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px my-[15px]" />
+          <Separator.Root className="bg-gray-400 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px my-[15px]" />
           <h1 className="text-xl font-bold mb-2">
             {"Test transaction details"}
           </h1>
-          <div className="flex flex-row min-w-min h-fit mb-12 gap-2">
+          <div className="flex text-gray-950 flex-row min-w-min h-fit mb-12 gap-2">
             <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-200 py-0 px-2">
-              <p className="font-semibold text-gray-950">{"Wallet:"}</p> &nbsp;
-              <p className="text-[14.5px] font-semibold tracking-tighter">
+              <p className="font-medium">{"Wallet:"}</p> &nbsp;
+              <p className="text-[14.5px] font-medium tracking-tighter">
                 {transactionData?.recipient.slice(0, 4)}
                 {"...."}
                 {transactionData?.recipient.slice(-4)}
               </p>
             </div>
             <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-200 py-0 px-2">
-              <p className="font-semibold text-gray-950">{"Asset:"}</p> &nbsp;
-              <p className="text-[14.5px] font-semibold tracking-tighter">
+              <p className="font-medium">{"Asset:"}</p> &nbsp;
+              <p className="text-[14.5px] font-medium tracking-tighter">
                 {`${transactionData?.amount} ${transactionData?.token}`}
               </p>
             </div>
             <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-200 py-0 px-2">
-              <p className="font-semibold text-gray-950">{"Network:"}</p> &nbsp;
-              <p className="text-[14.5px] font-semibold tracking-tighter">
+              <p className="font-medium">{"Network:"}</p> &nbsp;
+              <p className="text-[14.5px] font-medium tracking-tighter">
                 {transactionData?.chain}
               </p>
             </div>
           </div>
-          <Separator.Root className="bg-violet6 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px my-[15px]" />
+          <Separator.Root className="bg-gray-400 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px my-[15px]" />
           <h1 className="text-xl font-bold mb-2">{"Analysis Report"}</h1>
           {isAnalysisCompleted && report && (
             <div>
               {Object.entries(report).map(([key, value]) => (
                 <p
-                  className="font-semibold text-gray-950 min-w-min w-[500px] mr-8"
+                  className="font-semibold  min-w-min w-[500px] mr-8"
                   key={key}
                 >
                   {`${key}: ${value}`}
