@@ -25,7 +25,7 @@ const ConfirmReceipt: React.FC<{
           <button
             type="button"
             onClick={goBack}
-            className="text-blue-600 font-semibold"
+            className="text-blue-600 hover:underline font-semibold"
           >
             {"Back"}
           </button>

@@ -29,5 +29,5 @@ link::after{
   -webkit-transform: rotate(-45deg);
 }
 .addressName::after{
-  content: ' 'url(./Verified.svg);
+  content: ' 'url(../../public/assets/Verified.svg);
 }

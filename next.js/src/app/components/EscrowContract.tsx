@@ -107,7 +107,7 @@ const EscrowContract: React.FC<{
   };
 
   return (
-    <div className="max-w-fit min-w-min p-4 rounded-xl items-center justify-between border-2 text-white font-sans border-gray-400 text-sm lg:flex">
+    <div className="max-w-fit min-w-min my-10 p-4 rounded-xl items-center justify-between border-2 text-white font-sans border-gray-400 text-sm lg:flex">
       <div className="w-full min-w-min">
         <button
           type="button"

@@ -115,10 +115,16 @@ export default function HomePage() {
             type="button"
             onClick={() =>
               window.open(
-                "https://github.com/alessandromaci/umbrella",
+                "https://discord.gg/vHCSnu9s",
                 "_blank"
               )
             }
+          >
+            <DiscordSVG className="hover:fill-white" />
+          </button>
+          <button
+            type="button"
+            onClick={() => window.open("https://github.com/alessandromaci/umbrella", "_blank")}
           >
             <GithubSVG className="hover:fill-white" />
           </button>
@@ -148,7 +154,7 @@ export default function HomePage() {
             className="font-semibold hover:underline underline-offset-4"
             target="_blank"
             rel="noreferrer"
-            href={"https://twitter.com/0xMartian69"}
+            href={"https://twitter.com/0xmihirsahu"}
           >
             Mihir
           </a>

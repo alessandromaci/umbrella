@@ -145,7 +145,7 @@ const StartPage: React.FC<{
   }, [address]);
 
   return (
-    <div className="max-w-fit text-white w-full max-h-90 p-4 rounded-xl items-center justify-between border-2 font-noto text-sm lg:flex">
+    <div className="max-w-fit text-white w-full max-h-90 my-16 p-4 rounded-xl items-center justify-between border-2 font-noto text-sm lg:flex">
       <div>
         <h1 className="text-3xl ml-5 mt-3 font-bold mb-2">New Transaction</h1>
         <br />
@@ -158,7 +158,7 @@ const StartPage: React.FC<{
           </Label.Root>
           <br />
           <input
-            className=" inline-flex ml-5 h-[35px] w-[450px] appearance-none items-center justify-center rounded-[4px] rounded-r-none px-[10px] text-[15px]  leading-none shadow-[0_0_0_1px] bg-zinc-900 shadow-sky-400  focus:shadow-[0_0_0_2px] focus:shadow-sky-500  outline-none  border-r-0"
+            className=" inline-flex ml-5 placeholder:text-gray-600 h-[35px] w-[450px] appearance-none items-center justify-center rounded-[4px] rounded-r-none px-[10px] text-[15px]  leading-none shadow-[0_0_0_1px] bg-zinc-900 shadow-sky-400  focus:shadow-[0_0_0_2px] focus:shadow-sky-500  outline-none  border-r-0"
             type="number"
             id="amount"
             placeholder="0.05"
@@ -214,8 +214,8 @@ const StartPage: React.FC<{
         >
           <Tabs.Root className="flex flex-col w-full" defaultValue="newAddress">
             <Tabs.List
-              className="shrink-0 flex border-b border-mauve6"
-              aria-label="Manage your account"
+              className="shrink-0 flex border-b border-gray-400"
+              aria-label="Enter Address"
             >
               <Tabs.Trigger
                 className="bg-zinc-900 text-gray-400 px-5 h-[45px] flex-1 flex items-center justify-center text-[15px] leading-none select-none first:rounded-tl-md last:rounded-tr-md hover:text-sky-500 data-[state=active]:text-white data-[state=active]:shadow-sky-500 data-[state=active]:shadow-[inset_0_-1px_0_0,0_1px_0_0] data-[state=active]:focus:relative outline-none cursor-default"
@@ -236,7 +236,7 @@ const StartPage: React.FC<{
             >
               <fieldset className="mb-2 w-full flex flex-col justify-start">
                 <input
-                  className="grow bg-zinc-900 shrink-0 w-[538px] rounded px-2.5 text-[15px] leading-none text-gray-200 shadow-[0_0_0_1px] shadow-sky-400 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-500 outline-none"
+                  className="grow bg-zinc-900 shrink-0 w-[538px] placeholder:text-gray-600 rounded px-2.5 text-[15px] leading-none text-gray-200 shadow-[0_0_0_1px] shadow-sky-400 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-500 outline-none"
                   id="address"
                   placeholder="0x..."
                   onChange={(e) => {
@@ -274,7 +274,7 @@ const StartPage: React.FC<{
         {errors.recipient && (
           <p className="text-red-500 mt-2">{errors.recipient}</p>
         )}
-        <div className="ml-5">
+        <div className="ml-5 mt-8">
           <h2 className="text-lg font-semibold my-2">
             {"Select security level"}
           </h2>
@@ -299,7 +299,7 @@ const StartPage: React.FC<{
               >
                 {"Basic Security"}
                 <br />
-                <p className="text-sm font-light">
+                <p className="text-sm text-gray-300 font-light">
                   {
                     "Send a test transaction and connect with an account you've never sent funds to before."
                   }
@@ -321,7 +321,7 @@ const StartPage: React.FC<{
               >
                 {"Enhanced Security"}
                 <br />
-                <p className="text-sm font-light">
+                <p className="text-sm text-gray-300 font-light">
                   {
                     "Run an intelligence analysis on a address to see if they are a legitimate account."
                   }
@@ -343,7 +343,7 @@ const StartPage: React.FC<{
               >
                 {"Advanced Security"}
                 <br />
-                <p className="text-sm font-light">
+                <p className="text-sm text-gray-300 font-light">
                   {
                     "Create an escrow contract which holds funds until a certain condition is met."
                   }
