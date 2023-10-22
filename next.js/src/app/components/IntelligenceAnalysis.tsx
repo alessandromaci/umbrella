@@ -91,12 +91,15 @@ const IntelligenceAnalysis: React.FC<{
     setIsAnalysisCompleted(false);
     if (transactionData) {
       const recipient = transactionData.recipient;
-      const apiKey = process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY;
-      if (!apiKey) {
-        console.error("Etherscan API key is not set");
-        return;
+      const ethereumApiKey = process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY;
+      const polygonApiKey = process.env.NEXT_PUBLIC_POLYGONSCAN_PRIVATE_KEY;
+
+      let url: string;
+      if (transactionData.chain == "maticmum") {
+        url = `https://api-testnet.polygonscan.com/api?module=account&action=txlist&address=${recipient}&startblock=0&endblock=99999999&sort=asc&apikey=${polygonApiKey}`;
+      } else {
+        url = `https://api-goerli.etherscan.io/api?module=account&action=txlist&address=${recipient}&startblock=0&endblock=99999999&sort=asc&apikey=${ethereumApiKey}`;
       }
-      const url = `https://api-goerli.etherscan.io/api?module=account&action=txlist&address=${recipient}&startblock=0&endblock=99999999&sort=asc&apikey=${apiKey}`;
       try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -105,8 +108,23 @@ const IntelligenceAnalysis: React.FC<{
         }
         const data = await response.json();
         if (data.status !== "1") {
-          console.error("Etherscan API returned an error:", data.message);
-          return;
+          if (data.message == "No transactions found") {
+            setReport({
+              "number of transactions found": 0,
+              "average transaction value (ETH)": 0,
+              "average time interval between transactions (days)": 0,
+              "number of transactions with gas price > 100 Gwei": 0,
+              "number of contract interactions": 0,
+            });
+            setIsAnalysisCompleted(true);
+            setIsAnalyzing(false);
+            return;
+          } else {
+            console.error("API returned an error:", data.message);
+            setIsAnalysisCompleted(true);
+            setIsAnalyzing(false);
+            return;
+          }
         }
 
         setTimeout(async () => {

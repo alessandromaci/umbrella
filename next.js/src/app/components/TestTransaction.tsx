@@ -238,7 +238,7 @@ const TestTransaction: React.FC<{
           >
             {isLoadingNative
               ? "Sending..."
-              : "I understand, send full transaction anyway"}
+              : "I accept my risks, send full transaction directly"}
           </button>
         )}
 
@@ -246,7 +246,10 @@ const TestTransaction: React.FC<{
           <div className="font-semibold mt-3 text-gray-400 min-w-min w-[500px] mr-8">
             {`Payment successful! Check your transaction on `}
 
-            <a className="link text-sky-700 hover:text-sky-600" href={`https://etherscan.io/tx/${dataNative?.hash}`}>
+            <a
+              className="link text-sky-700 hover:text-sky-600"
+              href={`https://etherscan.io/tx/${dataNative?.hash}`}
+            >
               {"Etherscan"}
             </a>
           </div>
