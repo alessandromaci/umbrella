@@ -63,7 +63,7 @@ const EscrowContract: React.FC<{
     address: "0xf0b1c1b99f2d9c94a57ec2da45915cf1fd3e47a7",
     abi: EscrowContractABI,
     functionName: "confirmReceived",
-    args: [1],
+    args: [3],
   });
 
   const {
@@ -162,7 +162,7 @@ const EscrowContract: React.FC<{
               {"Name of Contract"}
             </p>
             <input
-              className="grow shrink-0 w-full rounded px-2.5 text-[15px] leading-none text-sky-600 shadow-[0_0_0_1px] shadow-sky-500 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-600 mb-4 outline-none"
+              className="grow shrink-0 w-full rounded px-2.5 text-[15px] bg-zinc-900 leading-none text-sky-600 shadow-[0_0_0_1px] shadow-sky-500 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-600 mb-4 outline-none"
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -224,7 +224,11 @@ const EscrowContract: React.FC<{
               <>
                 {" "}
                 <p>{`Contract confirmed. Money sent to the recipient! Check`}</p>{" "}
-                <a href={etherscanLink}>{"Etherscan"}</a>
+                <a
+                  href={`https://mumbai.polygonscan.com/tx/${dataConfirmReceived?.hash}`}
+                >
+                  {"Etherscan"}
+                </a>
               </>
             )}
           </>
