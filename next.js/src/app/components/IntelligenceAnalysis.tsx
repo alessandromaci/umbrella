@@ -173,7 +173,7 @@ const IntelligenceAnalysis: React.FC<{
   };
 
   return (
-    <main className="flex text-white min-h-screen flex-col items-center min-w-min justify-between p-24">
+    <main className="flex text-white min-h-screen flex-col items-center min-w-min justify-between my-10 p-24">
       <div className="max-w-fit min-w-min p-4 rounded-xl items-center justify-between border-2 font-noto border-gray-400 text-sm lg:flex">
         <div className="w-full min-w-min">
           <button

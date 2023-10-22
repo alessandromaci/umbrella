@@ -124,7 +124,7 @@ const TestTransaction: React.FC<{
   }, [isSuccess, isSuccessNative]);
 
   return (
-    <div className="max-w-fit min-w-min p-4 text-white rounded-xl items-center justify-between border-2 font-noto border-gray-200 text-sm lg:flex">
+    <div className="max-w-fit min-w-min my-16 p-4 text-white rounded-xl items-center justify-between border-2 font-noto border-gray-200 text-sm lg:flex">
       <div className="w-full min-w-min">
         <button
           type="button"
@@ -228,7 +228,7 @@ const TestTransaction: React.FC<{
           </button>
         ) : (
           <button
-            className="text-lg font-semibold rounded-lg border-2 min-w-min border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
+            className="text-lg font-semibold rounded-lg  hover:text-sky-400 hover:border-sky-400 border-2 min-w-min border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
             type="button"
             onClick={
               transactionData?.isNativeTx
@@ -243,10 +243,10 @@ const TestTransaction: React.FC<{
         )}
 
         {isSuccessNative && (
-          <div className="font-semibold text-gray-950 min-w-min w-[500px] mr-8">
+          <div className="font-semibold mt-3 text-gray-400 min-w-min w-[500px] mr-8">
             {`Payment successful! Check your transaction on `}
 
-            <a href={`https://etherscan.io/tx/${dataNative?.hash}`}>
+            <a className="link text-sky-700 hover:text-sky-600" href={`https://etherscan.io/tx/${dataNative?.hash}`}>
               {"Etherscan"}
             </a>
           </div>

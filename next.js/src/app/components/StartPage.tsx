@@ -145,7 +145,7 @@ const StartPage: React.FC<{
   }, [address]);
 
   return (
-    <div className="max-w-fit text-white w-full max-h-90 my-16 p-6 rounded-xl items-center justify-between border-2 font-noto text-sm lg:flex">
+    <div className="max-w-fit text-white w-full max-h-90 my-16 p-4 rounded-xl items-center justify-between border-2 font-noto text-sm lg:flex">
       <div>
         <h1 className="text-3xl ml-5 mt-3 font-bold mb-2">New Transaction</h1>
         <br />
@@ -274,7 +274,7 @@ const StartPage: React.FC<{
         {errors.recipient && (
           <p className="text-red-500 mt-2">{errors.recipient}</p>
         )}
-        <div className="ml-5">
+        <div className="ml-5 mt-8">
           <h2 className="text-lg font-semibold my-2">
             {"Select security level"}
           </h2>
@@ -299,7 +299,7 @@ const StartPage: React.FC<{
               >
                 {"Basic Security"}
                 <br />
-                <p className="text-sm font-light">
+                <p className="text-sm text-gray-300 font-light">
                   {
                     "Send a test transaction and connect with an account you've never sent funds to before."
                   }
@@ -321,7 +321,7 @@ const StartPage: React.FC<{
               >
                 {"Enhanced Security"}
                 <br />
-                <p className="text-sm font-light">
+                <p className="text-sm text-gray-300 font-light">
                   {
                     "Run an intelligence analysis on a address to see if they are a legitimate account."
                   }
@@ -343,7 +343,7 @@ const StartPage: React.FC<{
               >
                 {"Advanced Security"}
                 <br />
-                <p className="text-sm font-light">
+                <p className="text-sm text-gray-300 font-light">
                   {
                     "Create an escrow contract which holds funds until a certain condition is met."
                   }
