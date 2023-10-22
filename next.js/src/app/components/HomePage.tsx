@@ -109,6 +109,17 @@ export default function HomePage() {
             type="button"
             onClick={() =>
               window.open(
+                "https://discord.gg/vHCSnu9s",
+                "_blank"
+              )
+            }
+          >
+            <DiscordSVG className="hover:fill-white" />
+          </button>
+          <button
+            type="button"
+            onClick={() =>
+              window.open(
                 "https://github.com/alessandromaci/umbrella",
                 "_blank"
               )
