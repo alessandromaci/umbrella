@@ -16,7 +16,7 @@ const SideMenu: React.FC<{
         <button
           type="button"
           onClick={onStart}
-          className="text-lg mt-2 font-semibold rounded-lg p-2 text-gray-00 w-[200px] bg-sky-500 mb-16"
+          className="text-lg mt-2 font-semibold rounded-lg p-2 text-gray-00 w-[200px] hover:bg-sky-400 bg-sky-500 mb-16"
         >
           {"New Transaction"}
         </button>
