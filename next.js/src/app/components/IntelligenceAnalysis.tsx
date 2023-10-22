@@ -193,7 +193,7 @@ const IntelligenceAnalysis: React.FC<{
           </p>
           <Separator.Root className="bg-gray-400 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px my-[15px]" />
           <h1 className="text-xl font-bold mb-2">
-            {"Test transaction details"}
+            {"Full transaction details"}
           </h1>
           <div className="flex text-gray-950 flex-row min-w-min h-fit mb-12 gap-2">
             <div className="border border-black h-fit flex flex-row rounded-2xl bg-gray-200 py-0 px-2">
