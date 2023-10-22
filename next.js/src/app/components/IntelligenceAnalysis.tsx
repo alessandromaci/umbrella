@@ -7,9 +7,9 @@ import {
   useSendTransaction,
   usePrepareContractWrite,
   useContractWrite,
-  useAccount,
 } from "wagmi";
 import ERC20 from "../utils/ERC20.abi.json";
+import "./spinner.css";
 
 interface TransactionData {
   recipient: string;
@@ -48,6 +48,7 @@ const IntelligenceAnalysis: React.FC<{
   onContinue: () => void;
   transactionData: TransactionData | undefined;
 }> = ({ goBack, onContinue, transactionData }) => {
+  const [isAnalyzing, setIsAnalyzing] = React.useState<boolean>(false);
   const [isAnalysisCompleted, setIsAnalysisCompleted] =
     React.useState<boolean>(false);
   const [report, setReport] = React.useState<any>();
@@ -86,6 +87,7 @@ const IntelligenceAnalysis: React.FC<{
   });
 
   const handleAnalysis = async () => {
+    setIsAnalyzing(true);
     setIsAnalysisCompleted(false);
     if (transactionData) {
       const recipient = transactionData.recipient;
@@ -106,9 +108,14 @@ const IntelligenceAnalysis: React.FC<{
           console.error("Etherscan API returned an error:", data.message);
           return;
         }
-        const history: EtherscanTransaction[] = data.result;
-        const report = analyzeHistory(history);
-        setReport(report);
+
+        setTimeout(async () => {
+          const history: EtherscanTransaction[] = data.result;
+          const report = analyzeHistory(history);
+          setReport(report);
+          setIsAnalyzing(false);
+        }, 2000);
+
         console.log("Our report", report);
       } catch (error) {
         console.error(
@@ -212,6 +219,12 @@ const IntelligenceAnalysis: React.FC<{
           </div>
           <Separator.Root className="bg-gray-400 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px my-[15px]" />
           <h1 className="text-xl font-bold mb-2">{"Analysis Report"}</h1>
+          {isAnalyzing && (
+            <div className="spinner">
+              {/* Spinner HTML */}
+              <div className="loader"></div>
+            </div>
+          )}
           {isAnalysisCompleted && report && (
             <div>
               {Object.entries(report).map(([key, value]) => (

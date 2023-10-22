@@ -156,13 +156,13 @@ const AddressBook: React.FC<{
           {isNewContactAdded ? (
             <p>Contact added!</p>
           ) : (
-                    <button
-            className="text-lg font-semibold rounded-lg border-2 min-w-min border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
-            type="button"
-            onClick={handleSaveAddress}
-          >
-            {isAdding ? "Adding contact" : "Add recipient to address book"}
-          </button>
+            <button
+              className="text-lg font-semibold rounded-lg border-2 min-w-min border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
+              type="button"
+              onClick={handleSaveAddress}
+            >
+              {isAdding ? "Adding contact..." : "Add recipient to address book"}
+            </button>
           )}
           <br />
           <br />

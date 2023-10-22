@@ -150,7 +150,7 @@ const TestTransaction: React.FC<{
         </p>
         <br />
         <button
-          className="text-lg font-bold rounded-lg p-2 w-[150px] hover:bg-sky-400 bg-sky-500 mb-8"
+          className="text-lg font-bold rounded-lg p-2 w-[200px] hover:bg-sky-400 bg-sky-500 mb-8"
           onClick={
             transactionData?.chain == "maticmum"
               ? () => window.open("https://mumbaifaucet.com/", "_blank")
