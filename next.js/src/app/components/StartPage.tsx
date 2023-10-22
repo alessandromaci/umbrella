@@ -263,7 +263,7 @@ const StartPage: React.FC<{
                   </option>
                   {Object.entries(addressBook).map(([address, name]) => (
                     <option key={address} value={address}>
-                      {`${name}.umbrella`}
+                      {name}
                     </option>
                   ))}
                 </select>

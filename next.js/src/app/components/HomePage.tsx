@@ -107,18 +107,18 @@ export default function HomePage() {
         <div className="w-full p-16 min-w-min flex flex-row gap-8 justify-center">
           <button
             type="button"
+            onClick={() => window.open("https://discord.gg/vHCSnu9s", "_blank")}
+          >
+            <DiscordSVG className="hover:fill-white" />
+          </button>
+          <button
+            type="button"
             onClick={() =>
               window.open(
                 "https://github.com/alessandromaci/umbrella",
                 "_blank"
               )
             }
-          >
-            <DiscordSVG className="hover:fill-white" />
-          </button>
-          <button
-            type="button"
-            onClick={() => window.open("https://discord.gg/vHCSnu9s", "_blank")}
           >
             <GithubSVG className="hover:fill-white" />
           </button>
