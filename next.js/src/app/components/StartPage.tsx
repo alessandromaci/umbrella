@@ -158,7 +158,7 @@ const StartPage: React.FC<{
           </Label.Root>
           <br />
           <input
-            className=" inline-flex ml-5 h-[35px] w-[450px] appearance-none items-center justify-center rounded-[4px] rounded-r-none px-[10px] text-[15px]  leading-none shadow-[0_0_0_1px] bg-zinc-900 shadow-sky-400  focus:shadow-[0_0_0_2px] focus:shadow-sky-500  outline-none  border-r-0"
+            className=" inline-flex ml-5 placeholder:text-gray-600 h-[35px] w-[450px] appearance-none items-center justify-center rounded-[4px] rounded-r-none px-[10px] text-[15px]  leading-none shadow-[0_0_0_1px] bg-zinc-900 shadow-sky-400  focus:shadow-[0_0_0_2px] focus:shadow-sky-500  outline-none  border-r-0"
             type="number"
             id="amount"
             placeholder="0.05"
@@ -236,7 +236,7 @@ const StartPage: React.FC<{
             >
               <fieldset className="mb-2 w-full flex flex-col justify-start">
                 <input
-                  className="grow bg-zinc-900 shrink-0 w-[538px] rounded px-2.5 text-[15px] leading-none text-gray-200 shadow-[0_0_0_1px] shadow-sky-400 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-500 outline-none"
+                  className="grow bg-zinc-900 shrink-0 w-[538px] placeholder:text-gray-600 rounded px-2.5 text-[15px] leading-none text-gray-200 shadow-[0_0_0_1px] shadow-sky-400 h-[35px] focus:shadow-[0_0_0_2px] focus:shadow-sky-500 outline-none"
                   id="address"
                   placeholder="0x..."
                   onChange={(e) => {

@@ -124,7 +124,7 @@ const TestTransaction: React.FC<{
   }, [isSuccess, isSuccessNative]);
 
   return (
-    <div className="max-w-fit min-w-min my-16 p-4 text-white rounded-xl items-center justify-between border-2 font-noto border-gray-200 text-sm lg:flex">
+    <div className="max-w-fit min-w-min my-14 p-6 text-white rounded-xl items-center justify-between border-2 font-noto border-gray-200 text-sm lg:flex">
       <div className="w-full min-w-min">
         <button
           type="button"
@@ -220,7 +220,7 @@ const TestTransaction: React.FC<{
         </button>
         {transactionData?.securityLevel == "enhanced" ? (
           <button
-            className="text-lg font-semibold rounded-lg border-2 min-w-min border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
+            className="text-lg font-semibold rounded-lg border-2 min-w-min hover:text-sky-400 hover:border-sky-400 border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
             type="button"
             onClick={onAnalysis}
           >

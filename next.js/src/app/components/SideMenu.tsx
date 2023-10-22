@@ -10,13 +10,13 @@ const SideMenu: React.FC<{
   return (
     <div className="text-white p-4 font-noto h-full justify-start self-center border-r-2 border-gray-400 text-sm flex flex-col ">
       <div className="flex flex-col items-center">
-        <h1 className="text-5xl font-bold font-outfit mt-0 mb-4">umbrella</h1>
+        <h1 className="text-5xl font-bold font-outfit mt-0 mb-8">umbrella</h1>
         <br />
         <ConnectButton chainStatus='none'/>
         <button
           type="button"
           onClick={onStart}
-          className="text-lg mt-2 font-semibold rounded-lg p-2 text-gray-00 w-[200px] hover:bg-sky-400 bg-sky-500 mb-16"
+          className="text-lg mt-2 font-semibold rounded-xl p-2 text-gray-00 w-[200px] hover:bg-sky-500 bg-sky-600 mb-14"
         >
           {"New Transaction"}
         </button>
