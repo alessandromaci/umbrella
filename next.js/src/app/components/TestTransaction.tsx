@@ -218,8 +218,7 @@ const TestTransaction: React.FC<{
         >
           {isLoadingTest ? "Sending..." : "Send Test Transaction"}
         </button>
-        {transactionData?.securityLevel == "enhanced" ||
-        transactionData?.securityLevel == "advanced" ? (
+        {transactionData?.securityLevel == "enhanced" ? (
           <button
             className="text-lg font-semibold rounded-lg border-2 min-w-min hover:text-sky-400 hover:border-sky-400 border-sky-500 p-2 bg-gray-00 w-full text-sky-500"
             type="button"
